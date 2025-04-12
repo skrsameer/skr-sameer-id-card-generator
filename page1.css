@@ -89,23 +89,27 @@ input[type="text"], input[type="password"] {
     color: #666;
     margin-top: 20px;
 }
-/* Fade-out effect */
-.fade-out {
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
 
-/* Shake animation keyframes */
+/* Shake animation */
 @keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-10px); }
-  40% { transform: translateX(10px); }
-  60% { transform: translateX(-10px); }
-  80% { transform: translateX(10px); }
-  100% { transform: translateX(0); }
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(-10px); }
+    80% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
 }
 
-/* Shake effect class */
 .shake {
-  animation: shake 0.5s;
+    animation: shake 0.5s;
+}
+
+/* Fade-out animation */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; transform: scale(0.95); }
+}
+
+.fade-out {
+    animation: fadeOut 0.5s forwards;
 }
