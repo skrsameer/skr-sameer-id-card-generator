@@ -1,41 +1,46 @@
-// Wait for full page to load
-document.addEventListener("DOMContentLoaded", function () {
-    // Select the form element
-    const form = document.querySelector("form");
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
 
-    // Add event listener to form submit
-    form.addEventListener("submit", function (e) {
-        e.preventDefault(); // Stop default form submit
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-        // Get all input fields
-        const inputs = document.querySelectorAll("input");
+    const inputs = document.querySelectorAll("input");
+    const firstName = inputs[0].value.trim();
+    const lastName = inputs[1].value.trim();
+    const emailOrPhone = inputs[4].value.trim();
+    const password = inputs[5].value.trim();
+    const confirmPass = inputs[6].value.trim();
 
-        const firstName = inputs[0].value.trim();     // First Name
-        const lastName = inputs[1].value.trim();      // Last Name
-        const emailOrPhone = inputs[4].value.trim();  // Email or Phone
-        const password = inputs[5].value;             // Password
-        const confirmPass = inputs[6].value;          // Confirm Password
+    // Validation
+    if (!firstName || !lastName || !emailOrPhone || !password || !confirmPass) {
+      form.classList.add("shake");
+      form.addEventListener("animationend", () => {
+        form.classList.remove("shake");
+      }, { once: true });
+      alert("Please fill in all required fields.");
+      return;
+    }
 
-        // Validation: Check if fields are empty
-        if (!firstName || !lastName || !emailOrPhone || !password || !confirmPass) {
-            alert("Please fill in all required fields.");
-            return;
-        }
+    if (password !== confirmPass) {
+      form.classList.add("shake");
+      form.addEventListener("animationend", () => {
+        form.classList.remove("shake");
+      }, { once: true });
+      alert("Password and Confirm Password do not match.");
+      return;
+    }
 
-        // Validation: Password match
-        if (password !== confirmPass) {
-            alert("Password and Confirm Password do not match.");
-            return;
-        }
+    // Save to localStorage
+    localStorage.setItem("userID", emailOrPhone);
+    localStorage.setItem("userPASS", password);
+    localStorage.setItem("firstName", firstName);
+    localStorage.setItem("lastName", lastName);
 
-        // Store credentials in localStorage
-        localStorage.setItem("userID", emailOrPhone);
-        localStorage.setItem("userPASS", password);
-        localStorage.setItem("firstName", firstName);
-        localStorage.setItem("lastName", lastName);
-
-        // Notify user and redirect
-        alert("Account created successfully! Please log in.");
-        window.location.href = "page1.html"; // Redirect to login page
-    });
+    // Fade out and redirect
+    form.classList.add("fade-out");
+    form.addEventListener("transitionend", () => {
+      alert("Account created successfully!");
+      window.location.href = "page1.html";
+    }, { once: true });
+  });
 });
