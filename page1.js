@@ -1,27 +1,23 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('form');
-  const inputs = document.querySelectorAll('input');
-  const formContainer = document.querySelector('form');
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector("form");
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const enteredEmail = inputs[0].value.trim();
-    const enteredPassword = inputs[1].value.trim();
+    const inputs = form.querySelectorAll("input");
+    const enteredID = inputs[0].value.trim();
+    const enteredPASS = inputs[1].value.trim();
 
-    const savedEmail = localStorage.getItem('userEmail');
-    const savedPassword = localStorage.getItem('userPassword');
+    const storedID = localStorage.getItem("userID");
+    const storedPASS = localStorage.getItem("userPASS");
 
-    if (enteredEmail === savedEmail && enteredPassword === savedPassword) {
-      formContainer.classList.add("fade-out");
-      setTimeout(() => {
-        alert("Login successful!");
-        window.location.href = 'page3.html';
-      }, 500);
+    if (enteredID === storedID && enteredPASS === storedPASS) {
+      alert("Login Successful!");
+      window.location.href = "page3.html"; // यहाँ redirect पेज डालो
     } else {
-      formContainer.classList.add("shake");
-      setTimeout(() => formContainer.classList.remove("shake"), 500);
-      alert("Invalid Email or Password!");
+      alert("Invalid ID or Password");
+      form.classList.add("shake");
+      setTimeout(() => form.classList.remove("shake"), 500);
     }
   });
 });
