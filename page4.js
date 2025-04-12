@@ -1,6 +1,15 @@
 // page4.js
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Step 1: Check if user is logged in
+  const isLoggedIn = localStorage.getItem("userID") && localStorage.getItem("userPASS");
+  if (!isLoggedIn) {
+    alert("Please log in first.");
+    window.location.href = "page1.html";
+    return;
+  }
+
+  // Step 2: Setup menu UI
   const menuContainer = document.querySelector(".menu-container");
   const closeBtn = document.querySelector(".close-btn");
   const links = document.querySelectorAll(".menu-links li a");
@@ -23,17 +32,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Menu link actions:
+  // Step 3: Menu link actions
   if (links.length) {
     // Create New ID Card
     links[0].addEventListener("click", () => {
       window.location.href = "page5.html";
     });
 
-    // Download List - Trigger PDF download
+    // Download List
     links[1].addEventListener("click", () => {
       const link = document.createElement("a");
-      link.href = "about-us.pdf"; // File should be in same folder or correct path
+      link.href = "about-us.pdf"; // Make sure this file exists
       link.download = "About_Us_SKR_SAMEER.pdf";
       document.body.appendChild(link);
       link.click();
@@ -52,7 +61,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Log Out
     links[4].addEventListener("click", () => {
-      localStorage.clear();
+      localStorage.removeItem("userID");
+      localStorage.removeItem("userPASS");
       alert("You have been logged out.");
       window.location.href = "page1.html";
     });
