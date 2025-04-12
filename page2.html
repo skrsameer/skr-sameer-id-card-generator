@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Account - SKR SAMEER</title>
-    <link rel="stylesheet" href="page2.css"> <!-- CSS linked here -->
+    <link rel="stylesheet" href="page2.css">
 </head>
 <body>
     <div class="container">
         <h2>Create New Customer Account</h2>
 
-        <form>
+        <form id="signupForm">
             <div class="section-title">PERSONAL INFORMATION</div>
 
             <label>First Name <span class="required">*</span></label>
@@ -40,41 +40,55 @@
 
         <div class="footer">
             Website Made by SKR SAMEER
-
-
-        <div class="social-links">
-
-            <a href="https://youtube.com/@desi_star_0.2?si=ck4Q68-lBtCoTaBY" target="_blank">YouTube</a>
-
-            <a href="https://www.instagram.com/official_skr_sameer_01" target="_blank">Instagram</a>
-            <a href="https://www.facebook.com/0HyperGenAi" target="_blank">Facebook</a>
-        </div>
+            <div class="social-links">
+                <a href="https://youtube.com/@desi_star_0.2?si=ck4Q68-lBtCoTaBY" target="_blank">YouTube</a>
+                <a href="https://www.instagram.com/official_skr_sameer_01" target="_blank">Instagram</a>
+                <a href="https://www.facebook.com/0HyperGenAi" target="_blank">Facebook</a>
+            </div>
         </div>
     </div>
+
     <script>
-    const form = document.querySelector("form");
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("signupForm");
 
-    form.addEventListener("submit", function(e) {
-        e.preventDefault();
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
 
-        const inputs = document.querySelectorAll("input");
-        const emailOrPhone = inputs[4].value; // 5th input
-        const password = inputs[5].value;     // 6th input
-        const confirmPass = inputs[6].value;  // 7th input
+            const inputs = form.querySelectorAll("input");
+            const firstName = inputs[0].value.trim();
+            const lastName = inputs[1].value.trim();
+            const emailOrPhone = inputs[3].value.trim();
+            const password = inputs[4].value;
+            const confirmPass = inputs[5].value;
 
-        if (password !== confirmPass) {
-            alert("Password and Confirm Password do not match!");
-            return;
-        }
+            if (!firstName || !lastName || !emailOrPhone || !password || !confirmPass) {
+                alert("Please fill in all required fields.");
+                form.classList.add("shake");
+                setTimeout(() => form.classList.remove("shake"), 500);
+                return;
+            }
 
-        // Save to localStorage
-        localStorage.setItem("userID", emailOrPhone);
-        localStorage.setItem("userPASS", password);
+            if (password !== confirmPass) {
+                alert("Password and Confirm Password do not match!");
+                form.classList.add("shake");
+                setTimeout(() => form.classList.remove("shake"), 500);
+                return;
+            }
 
-        alert("Account Created Successfully!");
-        window.location.href = "page1.html"; // Redirect to login page
+            // Save to localStorage
+            localStorage.setItem("userID", emailOrPhone);
+            localStorage.setItem("userPASS", password);
+            localStorage.setItem("firstName", firstName);
+            localStorage.setItem("lastName", lastName);
+
+            alert("Account Created Successfully!");
+            form.classList.add("fade-out");
+            setTimeout(() => {
+                window.location.href = "page1.html";
+            }, 500);
+        });
     });
-</script>
-<script src="page2.js"></script>
+    </script>
 </body>
 </html>
