@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.querySelector("form");
 
   // Default user data (for demo/testing)
-  if (!localStorage.getItem("email id or phone no.")) {
-    localStorage.setItem("email id or phone no.", "skr");
-    localStorage.setItem("password", "12345");
+  if (!localStorage.getItem("userID")) {
+    localStorage.setItem("userID", "skr");
+    localStorage.setItem("userPASS", "12345");
   }
 
   form.addEventListener("submit", function (e) {
@@ -14,10 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const enteredID = inputs[0].value.trim();
     const enteredPASS = inputs[1].value.trim();
 
-    const storedID = localStorage.getItem("email id or phone no.");
-    const storedPASS = localStorage.getItem("Password");
+    const storedID = localStorage.getItem("userID");
+    const storedPASS = localStorage.getItem("userPASS");
 
-    if (entered email id or phone no. === stored email id or phone no. && enteredpassword === storedpassword) {
+    if (enteredID === storedID && enteredPASS === storedPASS) {
       // Login Successful: Apply fade-out animation.
       form.classList.add("fade-out");
 
