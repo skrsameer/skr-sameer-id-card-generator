@@ -89,3 +89,23 @@ input[type="text"], input[type="password"] {
     color: #666;
     margin-top: 20px;
 }
+/* Fade-out effect */
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Shake animation keyframes */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+
+/* Shake effect class */
+.shake {
+  animation: shake 0.5s;
+}
