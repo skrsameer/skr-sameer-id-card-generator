@@ -10,12 +10,12 @@
     <div class="container">
         <h2>SKR SAMEER</h2>
         <h3>Customer Login</h3>
-        <form>
+        <form id="loginForm">
             <label>Email id or Phone No. <span class="required">*</span></label>
-            <input type="text" placeholder="enter email or phone no." required>
+            <input type="text" id="userID" placeholder="enter email or phone no." required>
 
             <label>Password <span class="required">*</span></label>
-            <input type="password" placeholder="enter password" required>
+            <input type="password" id="userPASS" placeholder="enter password" required>
 
             <a class="forgot" href="#">Forgot Your Password?</a>
 
@@ -28,21 +28,43 @@
         <div class="new-customers">
             <h4>New Customers</h4>
             <p>Creating an account has many benefits: check out faster, keep more than one address, track orders and more.</p>
-            <button type="submit" class="btn" onclick="location.href='page2.html'">Create an Account</button>
-            </div>
+            <button class="btn" onclick="location.href='page2.html'">Create an Account</button>
+        </div>
 
         <div class="footer">
             Website'S Made by SKR SAMEER
-
-        <div class="social-links">
-            <a href="https://youtube.com/@desi_star_0.2?si=ck4Q68-lBtCoTaBY" target="_blank">YouTube</a>
-            <a href="https://www.instagram.com/official_skr_sameer_01" target="_blank">Instagram</a>
-            <a href="https://www.facebook.com/0HyperGenAi" target="_blank">Facebook</a>
+            <div class="social-links">
+                <a href="https://youtube.com/@desi_star_0.2?si=ck4Q68-lBtCoTaBY" target="_blank">YouTube</a>
+                <a href="https://www.instagram.com/official_skr_sameer_01" target="_blank">Instagram</a>
+                <a href="https://www.facebook.com/0HyperGenAi" target="_blank">Facebook</a>
+            </div>
         </div>
-        </div><tag>
-          <!--Tab to edit-->
-        </tag>
     </div>
-    <script src="page1.js"></script>
+
+    <script>
+        const form = document.getElementById("loginForm");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const enteredID = document.getElementById("userID").value.trim();
+            const enteredPass = document.getElementById("userPASS").value;
+
+            const savedID = localStorage.getItem("userID");
+            const savedPass = localStorage.getItem("userPASS");
+
+            if (enteredID === savedID && enteredPass === savedPass) {
+                form.classList.add("fade-out");
+                setTimeout(() => {
+                    alert("Login successful!");
+                    window.location.href = "page3.html"; // redirect after login
+                }, 500);
+            } else {
+                alert("Invalid credentials. Please try again.");
+                form.classList.add("shake");
+                setTimeout(() => form.classList.remove("shake"), 500);
+            }
+        });
+    </script>
 </body>
 </html>
