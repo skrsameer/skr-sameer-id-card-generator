@@ -11,7 +11,7 @@ body {
     margin: 50px auto;
     padding: 30px 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -73,28 +73,33 @@ small {
     background-color: #218838;
 }
 
+/* Shake Animation */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(-10px); }
+    80% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.4s;
+}
+
+/* Fade-out Animation */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; transform: scale(0.95); }
+}
+
+.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
 .footer {
     text-align: center;
     font-size: 12px;
     color: #666;
     margin-top: 20px;
-}
-/* Fade-out on success */
-.fade-out {
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-/* Shake animation */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-10px); }
-  40% { transform: translateX(10px); }
-  60% { transform: translateX(-10px); }
-  80% { transform: translateX(10px); }
-  100% { transform: translateX(0); }
-}
-
-.shake {
-  animation: shake 0.4s;
 }
