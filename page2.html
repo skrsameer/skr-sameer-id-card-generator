@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account - SKR SAMEER</title>
+    <link rel="stylesheet" href="page2.css"> <!-- CSS linked here -->
+</head>
+<body>
+    <div class="container">
+        <h2>Create New Customer Account</h2>
+
+        <form>
+            <div class="section-title">PERSONAL INFORMATION</div>
+
+            <label>First Name <span class="required">*</span></label>
+            <input type="text" placeholder="enter first name" required>
+
+            <label>Last Name <span class="required">*</span></label>
+            <input type="text" placeholder="enter last name" required>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="newsletter">
+                <label for="newsletter">Sign Up for Newsletter</label>
+            </div>
+
+            <div class="section-title">SIGN-IN INFORMATION</div>
+
+            <label>Email Id OR Phone No. <span class="required">*</span></label>
+            <input type="text" placeholder="enter email or phone no." required>
+
+            <label>Password <span class="required">*</span></label>
+            <input type="password" placeholder="enter new password" required>
+            <small>Password Strength: No Password</small>
+
+            <label>Confirm Password <span class="required">*</span></label>
+            <input type="password" placeholder="enter confirm password" required>
+
+            <button type="submit" class="btn">Create an Account</button>
+        </form>
+
+        <div class="footer">
+            Website Made by SKR SAMEER
+
+
+        <div class="social-links">
+
+            <a href="https://youtube.com/@desi_star_0.2?si=ck4Q68-lBtCoTaBY" target="_blank">YouTube</a>
+
+            <a href="https://www.instagram.com/official_skr_sameer_01" target="_blank">Instagram</a>
+            <a href="https://www.facebook.com/0HyperGenAi" target="_blank">Facebook</a>
+        </div>
+        </div>
+    </div>
+    <script>
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const inputs = document.querySelectorAll("input");
+        const emailOrPhone = inputs[4].value; // 5th input
+        const password = inputs[5].value;     // 6th input
+        const confirmPass = inputs[6].value;  // 7th input
+
+        if (password !== confirmPass) {
+            alert("Password and Confirm Password do not match!");
+            return;
+        }
+
+        // Save to localStorage
+        localStorage.setItem("userID", emailOrPhone);
+        localStorage.setItem("userPASS", password);
+
+        alert("Account Created Successfully!");
+        window.location.href = "page1.html"; // Redirect to login page
+    });
+</script>
+<script src="page2.js"></script>
+<script src="page2+.js"></script>
+</body>
+</html>

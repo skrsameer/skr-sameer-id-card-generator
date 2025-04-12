@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ID Card Form - SKR SAMEER</title>
+  <link rel="stylesheet" href="page5.css">
+</head>
+<body>
+  <div class="form-container">
+    <h1>SKR SAMEER</h1>
+    <p class="subtitle">Fill Details in the Form and Make School ID Card</p>
+
+    <form method="post" enctype="multipart/form-data">
+      <h2>Enter Student Details</h2>
+
+      <label>Name *</label>
+      <input type="text" name="name" placeholder="enter name" required>
+
+      <label>Class *</label>
+      <input type="text" name="class" placeholder="enter class" required>
+
+      <label>Roll Number *</label>
+      <input type="text" name="roll" placeholder="enter roll no." required>
+
+      <label>Date Of Birth *</label>
+      <input type="text" name="dob" placeholder="DD/MM/YYYY" required>
+
+      <label>Select Gender *</label><br>
+      <label><input type="radio" name="gender" value="Male" required> Male</label>
+      <label><input type="radio" name="gender" value="Female"> Female</label>
+      <label><input type="radio" name="gender" value="Other"> Other</label><br>
+
+      <label>Father’s Name *</label>
+      <input type="text" name="father" placeholder="enter father name" required>
+
+      <label>Phone No. *</label>
+      <input type="tel" name="phone" placeholder="enter phone no." required>
+
+      <label>Address *</label>
+      <input type="text" name="address" placeholder="enter address" required>
+
+      <label>Upload Photo *</label>
+      <input type="file" name="photo" required>
+      <img id="photoPreview" style="display:none; width:100px; height:120px; object-fit:cover; border:2px solid #333; border-radius:8px; margin-top:10px;">
+
+      <h2>Enter School & Principal Details</h2>
+
+      <label>School Name *</label>
+      <input type="text" name="school" placeholder="enter school name" required>
+
+      <label>Select School Type *</label>
+      <select name="schoolType" required>
+        <option value="">Select Type</option>
+        <option value="An English Medium Educational School">English Medium</option>
+        <option value="An Hindi Medium Educational School">Hindi Medium</option>
+      </select>
+
+      <label>Session Year *</label>
+      <select name="session" required>
+        <option value="">Select session year</option>
+        <option value="2024-25">2024-25</option>
+        <option value="2025-26">2025-26</option>
+        <option value="2026-27">2026-27</option>
+      </select>
+
+      <label>School Phone No. *</label>
+      <input type="tel" name="schoolPhone" placeholder="enter school phone no." required>
+
+      <label>School Address *</label>
+      <input type="text" name="schoolAddress" placeholder="enter school address" required>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <p class="footer">Website Made by SKR SAMEER</p>
+    <div class="social-links">
+
+            <a href="https://youtube.com/@desi_star_0.2?si=ck4Q68-lBtCoTaBY" target="_blank">YouTube</a>
+
+            <a href="https://www.instagram.com/official_skr_sameer_01" target="_blank">Instagram</a>
+            <a href="https://www.facebook.com/0HyperGenAi" target="_blank">Facebook</a>
+        </div>
+  </div>
+
+  <script src="page5.js"></script>
+</body>
+</html>

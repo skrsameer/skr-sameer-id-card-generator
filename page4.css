@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+.menu-container {
+  position: fixed;
+  top: 0;
+  right: 0; /* left se right kiya */
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  border-left: 1px solid #ddd; /* left border add kiya */
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 999;
+  transition: transform 0.3s ease;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.skr {
+  color: #0066ff;
+  font-style: italic;
+}
+
+.sameer {
+  color: #0066ff;
+  font-style: italic;
+}
+
+.uid {
+  font-size: 14px;
+  color: #333;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.close-btn {
+  background: #eee;
+  border: none;
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.menu-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.menu-links li {
+  border-bottom: 1px solid #ccc;
+}
+
+.menu-links a {
+  display: block;
+  text-decoration: none;
+  color: #222;
+  padding: 10px;
+  transition: background 0.3s;
+}
+
+.menu-links a:hover {
+  background: #f2f2f2;
+}
+
+.footer {
+  position: absolute;
+  bottom: 500px;
+  right: 140px;
+  font-size: 16px;
+  color: #444;
+}
