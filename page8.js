@@ -9,30 +9,68 @@ window.onload = function () {
     card.style.transform = "scale(1)";
   }, 200);
 
-  // Get form data from localStorage
-  document.getElementById("studentName").textContent = localStorage.getItem("name") || "N/A";
-  document.getElementById("studentClass").textContent = localStorage.getItem("class") || "N/A";
-  document.getElementById("studentRoll").textContent = localStorage.getItem("roll") || "N/A";
-  document.getElementById("fatherName").textContent = localStorage.getItem("father") || "N/A";
-  document.getElementById("dob").textContent = localStorage.getItem("dob") || "N/A";
-  document.getElementById("phone").textContent = localStorage.getItem("phone") || "N/A";
-  document.getElementById("address").textContent = localStorage.getItem("address") || "N/A";
-  document.getElementById("session").textContent = localStorage.getItem("session") || "2024-25";
+  // Fields to map from localStorage to HTML
+  const fields = [
+    "name", "class", "roll", "dob", "gender", "father", "phone",
+    "address", "post", "district", "pin", "schoolName", "schoolType",
+    "session", "schoolPhone", "schoolAddress", "photo"
+  ];
 
-  // Load Image from Base64
-  const imgData = localStorage.getItem("photo");
-  if (imgData) {
-    document.getElementById("profilePhoto").src = imgData;
-  }
+  fields.forEach(field => {
+    const value = localStorage.getItem(field);
+    const element = document.getElementById(mapFieldId(field));
+    if (element) {
+      if (field === "photo" && value) {
+        element.src = value;
+      } else {
+        element.textContent = value || "N/A";
+      }
+    }
+  });
 };
 
-// Download the ID card as image using html2canvas
+// Helper function to map localStorage keys to element IDs
+function mapFieldId(field) {
+  const mapping = {
+    name: "studentName",
+    class: "studentClass",
+    roll: "studentRoll",
+    dob: "dob",
+    gender: "gender",
+    father: "fatherName",
+    phone: "phone",
+    address: "address",
+    post: "post",
+    district: "district",
+    pin: "pin",
+    schoolName: "school-name",
+    schoolType: "school-type",
+    session: "session",
+    schoolPhone: "schoolphone",
+    schoolAddress: "schoolAddress",
+    photo: "profilePhoto"
+  };
+  return mapping[field];
+}
+
+// Home button function
+function goHome() {
+  localStorage.clear();
+  window.location.href = "page3.html";
+}
+
+// Download ID card as PDF
 function downloadCard() {
-  const card = document.getElementById("idCard");
-  html2canvas(card).then(canvas => {
-    const link = document.createElement("a");
-    link.download = "ID_Card.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+  const { jsPDF } = window.jspdf;
+  const idCard = document.getElementById("idCard");
+  const doc = new jsPDF({
+    unit: "in",
+    format: [2.2, 3.4]
+  });
+
+  html2canvas(idCard).then(canvas => {
+    const imgData = canvas.toDataURL("image/png");
+    doc.addImage(imgData, "PNG", 0, 0, 2.2, 3.4);
+    doc.save("ID_Card.pdf");
   });
 }
