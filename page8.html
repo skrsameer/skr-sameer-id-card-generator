@@ -1,41 +1,51 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SKR SAMEER</title>
-  <link rel="stylesheet" href="page8.css" />
+  <title>SKR SAMEER ID CARD</title>
+  <link rel="stylesheet" href="page8.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <button class="home-btn" onclick="window.location.href='page3.html'">Home</button>
+  <button class="home-btn" onclick="goHome()">Home</button>
+
   <div class="card-wrapper">
     <div class="id-card" id="idCard">
-      <div class="header">
-        <h2>GENIUS PUBLIC SCHOOL</h2>
-        <p class="school-type">An English Medium Co-educational School</p>
-        <p class="session">SESSION: <span id="session"></span></p>
-      </div><div class="photo-section">
-    <img id="profilePhoto" src="" alt="Student Photo" />
-  </div>  <div class="student-details">
-    <h3 id="studentName"></h3>
-    <p>Class: <span id="studentClass"></span> Roll: <span id="studentRoll"></span></p>
-    <p>Father’s Name: <span id="fatherName"></span></p>
-    <p>DOB: <span id="dob"></span></p>
-    <p>Mob: <span id="phone"></span></p>
-    <p>Address: <span id="address"></span></p> 
-  </div>  <div class="footer">
-    <p class="barcode">000000000000</p>
-    <p class="school-address">
-      AT. KUTTAI BASIT CHOWK, SATVITTA MORE HUSKANDA<br>
-    </p>
-    <p>Principal</p>
-  </div>
-</div><button onclick="downloadCard()">Download ID Card</button>
+      <div class="session">SESSION: <span id="session"></span></div>
 
+      <div class="header">
+        <div class="school-name" id="school-name"></div>
+        <div class="school-type" id="school-type"></div>
+      </div>
+
+      <div class="photo-section">
+        <img id="profilePhoto" src="" alt="Student Photo"/>
+      </div>
+
+      <div class="student-name" id="studentName"></div>
+
+      <div class="student-details">
+        <p>Class: <span id="studentClass"></span> | Roll: <span id="studentRoll"></span></p>
+        <p>Father’s Name: <span id="fatherName"></span></p>
+        <p>Date Of Birth: <span id="dob"></span></p>
+        <p>Gender: <span id="gender"></span></p>
+        <p>Phone: <span id="phone"></span></p>
+        <p>Address: At <span id="address"></span>, Post <span id="post"></span>, Dist <span id="district"></span>, Pin <span id="pin"></span></p>
+      </div>
+
+      <div class="footer">
+        <p class="barcode"><span id="schoolphone"></span></p>
+        <p class="school-address" id="schoolAddress"></p>
+      </div>
+    </div>
+
+    <button class="download-btn" onclick="downloadCard()">Download ID Card</button>
   </div>
-  <div class="social-links">
-    <a href="https://youtube.com/@desi_star_0.2?si=ck4Q68-lBtCoTaBY" target="_blank">YouTube</a>
-    <a href="https://www.instagram.com/official_skr_sameer_01" target="_blank">Instagram</a>
-    <a href="https://www.facebook.com/0HyperGenAi" target="_blank">Facebook</a>
-  </div>
+
   <footer class="main-footer">Website Made by SKR SAMEER</footer>
-  <script src="page8.js"></script>  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script></body>
+
+  <script src="page8.js"></script>
+</body>
 </html>
