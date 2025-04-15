@@ -12,8 +12,8 @@ body {
 }
 
 .id-card {
-  width: 2.3in;      /* 2.3 inch × 300 DPI */
-  height: 3.7in;    /* 3.7 inch × 300 DPI */
+  width: 2.3in; 
+  height: 3.7in;   
   background-image: url('idcardbackground.png');
   background-size: cover;
   background-position: center;
