@@ -11,20 +11,20 @@
     <h1>SKR SAMEER</h1>
     <p class="subtitle">Fill Details in the Form and Make School ID Card</p>
 
-    <form method="post" enctype="multipart/form-data">
+    <form onsubmit="saveFormData(); return false;" enctype="multipart/form-data">
       <h2>Enter Student Details</h2>
 
       <label>Name *</label>
-      <input type="text" name="name" placeholder="enter name" required>
+      <input type="text" id="name" placeholder="Enter student's name" required>
 
       <label>Class *</label>
-      <input type="text" name="class" placeholder="enter class" required>
+      <input type="text" id="class" placeholder="Enter class (e.g. 5th A)" required>
 
       <label>Roll Number *</label>
-      <input type="text" name="roll" placeholder="enter roll no." required>
+      <input type="text" id="roll" placeholder="Enter roll number" required>
 
       <label>Date Of Birth *</label>
-      <input type="text" name="dob" placeholder="DD/MM/YYYY" required>
+      <input type="text" id="dob" placeholder="DD/MM/YYYY" required>
 
       <label>Select Gender *</label><br>
       <label><input type="radio" name="gender" value="Male" required> Male</label>
@@ -32,32 +32,46 @@
       <label><input type="radio" name="gender" value="Other"> Other</label><br>
 
       <label>Father’s Name *</label>
-      <input type="text" name="father" placeholder="enter father name" required>
+      <input type="text" id="father" placeholder="Enter father's full name" required>
 
       <label>Phone No. *</label>
-      <input type="tel" name="phone" placeholder="enter phone no." required>
+      <input type="tel" id="phone" placeholder="Enter 10-digit phone number" required>
 
-      <label>Address *</label>
-      <input type="text" name="address" placeholder="enter address" required>
+      <label>Village *</label>
+      <input type="text" id="village" placeholder="Enter village name" required>
+
+      <label>Post Office *</label>
+      <input type="text" id="post" placeholder="Enter post office" required>
+
+      <label>District *</label>
+      <input type="text" id="district" placeholder="Enter district" required>
+
+      <label>Pin Code *</label>
+      <input type="text" id="pincode" placeholder="Enter 6-digit pin code" required>
 
       <label>Upload Photo *</label>
-      <input type="file" name="photo" required>
+      <input type="file" id="photo" accept="image/*" required>
+      <br>
+      <img id="cropImage" style="max-width:100%; display:none;">
+      <div id="cropContainer" style="display:none; margin-top:10px;">
+        <button id="cropButton" type="button">Crop</button>
+      </div>
       <img id="photoPreview" style="display:none; width:100px; height:120px; object-fit:cover; border:2px solid #333; border-radius:8px; margin-top:10px;">
 
       <h2>Enter School & Principal Details</h2>
 
       <label>School Name *</label>
-      <input type="text" name="school" placeholder="enter school name" required>
+      <input type="text" id="school-name" placeholder="Enter full school name" required>
 
       <label>Select School Type *</label>
-      <select name="schoolType" required>
+      <select id="schoolType" required>
         <option value="">Select Type</option>
-        <option value="An English Medium Educational School">English Medium</option>
-        <option value="An Hindi Medium Educational School">Hindi Medium</option>
+        <option value="An English Medium Co-Education School">English Medium</option>
+        <option value="A Hindi Medium Co-Education School">Hindi Medium</option>
       </select>
 
       <label>Session Year *</label>
-      <select name="session" required>
+      <select id="session" required>
         <option value="">Select session year</option>
         <option value="2024-25">2024-25</option>
         <option value="2025-26">2025-26</option>
@@ -65,24 +79,60 @@
       </select>
 
       <label>School Phone No. *</label>
-      <input type="tel" name="schoolPhone" placeholder="enter school phone no." required>
+      <input type="tel" id="schoolPhone" placeholder="Enter school phone number" required>
 
       <label>School Address *</label>
-      <input type="text" name="schoolAddress" placeholder="enter school address" required>
+      <input type="text" id="schoolAddress" placeholder="Enter full school address" required>
 
       <button type="submit">Submit</button>
     </form>
 
     <p class="footer">Website Made by SKR SAMEER</p>
     <div class="social-links">
-
-            <a href="https://youtube.com/@desi_star_0.2?si=ck4Q68-lBtCoTaBY" target="_blank">YouTube</a>
-
-            <a href="https://www.instagram.com/official_skr_sameer_01" target="_blank">Instagram</a>
-            <a href="https://www.facebook.com/0HyperGenAi" target="_blank">Facebook</a>
-        </div>
+      <a href="https://youtube.com/@desi_star_0.2?si=ck4Q68-lBtCoTaBY" target="_blank">YouTube</a>
+      <a href="https://www.instagram.com/official_skr_sameer_01" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/0HyperGenAi" target="_blank">Facebook</a>
+    </div>
   </div>
 
+  <script>
+    function saveFormData() {
+      const formData = {
+        name: document.getElementById("name").value,
+        class: document.getElementById("class").value,
+        roll: document.getElementById("roll").value,
+        dob: document.getElementById("dob").value,
+        gender: document.querySelector("input[name='gender']:checked").value,
+        father: document.getElementById("father").value,
+        phone: document.getElementById("phone").value,
+        village: document.getElementById("village").value,
+        post: document.getElementById("post").value,
+        district: document.getElementById("district").value,
+        pincode: document.getElementById("pincode").value,
+        schoolName: document.getElementById("school-name").value,
+        schoolType: document.getElementById("schoolType").value,
+        session: document.getElementById("session").value,
+        schoolPhone: document.getElementById("schoolPhone").value,
+        schoolAddress: document.getElementById("schoolAddress").value
+      };
+
+      const file = document.getElementById("photo").files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        formData.photo = e.target.result;
+        localStorage.setItem("formData", JSON.stringify(formData));
+        window.location.href = "page8.html";
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        localStorage.setItem("formData", JSON.stringify(formData));
+        window.location.href = "page8.html";
+      }
+    }
+  </script>
   <script src="page5.js"></script>
 </body>
 </html>
