@@ -53,7 +53,7 @@ function downloadCard() {
       format: [3.4, 2.2] // [height, width]
     });
 
-    pdf.addImage(imgData, 'PNG', 0, 0, 2.2, 3.4); // x, y, width, height
+    pdf.addImage(imgData, 'PNG', 0, 0, 2.3, 3.7); // x, y, width, height
     pdf.save("ID_Card.pdf");
   });
 }
