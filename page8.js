@@ -36,19 +36,24 @@ window.onload = function () {
 function downloadCard() {
   const card = document.getElementById("idCard");
 
+  // Ensure image fully visible before capture
+  const img = document.getElementById("profilePhoto");
+  img.style.opacity = "1";
+  img.style.animation = "none";
+
   html2canvas(card, {
     scale: 3,
     useCORS: true
   }).then((canvas) => {
-    const link = document.createElement("a");
-    link.download = "ID_Card.pdf";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'in',
+      format: [3.4, 2.2] // [height, width]
+    });
+
+    pdf.addImage(imgData, 'PNG', 0, 0, 2.2, 3.4); // x, y, width, height
+    pdf.save("ID_Card.pdf");
   });
 }
-
-// होम बटन: सब डेटा हटाएं और होम पेज पर भेजें
-document.querySelector(".home-btn").addEventListener("click", () => {
-  localStorage.clear();
-  window.location.href = "page3.html";
-});
