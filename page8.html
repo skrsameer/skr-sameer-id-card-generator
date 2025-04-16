@@ -6,12 +6,11 @@
   <title>SKR SAMEER ID CARD</title>
   <link rel="stylesheet" href="page8.css" />
   
- <!-- html2canvas लाइब्रेरी -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-<!-- jsPDF लाइब्रेरी -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- html2canvas लाइब्रेरी -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   
+  <!-- jsPDF लाइब्रेरी -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <!-- Home Button -->
@@ -41,10 +40,8 @@
         <p>Date Of Birth : <span id="dob">N/A</span></p>
         <p>Gender : <span id="gender">N/A</span></p>
         <p>Phone : <span id="phone">N/A</span></p>
-        <p>Address : At : <span id="village">N/A</span>,
-          P.O. <span id="post">N/A</span>,</p>
-          <p>Dist. <span id="district">N/A</span>,
-          Pin - <span id="pincode">N/A</span></p>
+        <p>Address : At : <span id="village">N/A</span>, P.O. <span id="post">N/A</span></p>
+        <p>Dist. <span id="district">N/A</span>, Pin - <span id="pincode">N/A</span></p>
       </div>
 
       <!-- School phone no -->
@@ -53,13 +50,14 @@
       </div>
     </div>
 
-  <button class="download-btn" onclick="downloadCard()">Download</button>
+    <!-- Download Button -->
+    <button class="download-btn" onclick="downloadCard()">Download</button>
+  </div>
 
   <!-- Footer -->
   <footer class="main-footer">Website Made by SKR SAMEER</footer>
 
   <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
     function loadFormData() {
       document.getElementById("studentName").textContent = localStorage.getItem("name") || "N/A";
@@ -78,22 +76,40 @@
 
       const photo = localStorage.getItem("photo");
       if (photo) {
-        document.getElementById("profilePhoto").src = photo;
+        const img = document.getElementById("profilePhoto");
+        img.src = photo;
+        img.style.opacity = "1";
+        img.style.animation = "none";
       }
     }
 
-    function downloadCard() {
+    async function downloadCard() {
+      const { jsPDF } = window.jspdf;
       const card = document.getElementById("idCard");
-      html2canvas(card).then((canvas) => {
-        const link = document.createElement("a");
-        link.download = "id_card.PDF";
-        link.href = canvas.toDataURL();
-        link.click();
+
+      // Disable animations before capturing
+      document.querySelectorAll(".student-details p").forEach(p => {
+        p.style.animation = "none";
+        p.style.opacity = "1";
       });
+
+      const canvas = await html2canvas(card, {
+        scale: 3,
+        useCORS: true
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: [85.6, 54] // ID card size in mm
+      });
+
+      pdf.addImage(imgData, 'PNG', 0, 0, 85.6, 54);
+      pdf.save("ID_Card.pdf");
     }
 
     window.onload = loadFormData;
   </script>
-  <script src="page8.js"></script>
 </body>
 </html>
