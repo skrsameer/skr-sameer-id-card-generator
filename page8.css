@@ -12,8 +12,8 @@ body {
 }
 
 .id-card {
-  width: 2.3in; 
-  height: 3.7in;   
+  width: 2.3in;
+  height: 3.7in;
   background-image: url('idcardbackground.png');
   background-size: cover;
   background-position: center;
@@ -83,33 +83,13 @@ body {
   animation-delay: 0.3s;
 }
 
-.student-details p:nth-child(1) {
-  animation-delay: 0.5s;
-}
-
-.student-details p:nth-child(2) {
-  animation-delay: 0.7s;
-}
-
-.student-details p:nth-child(3) {
-  animation-delay: 0.9s;
-}
-
-.student-details p:nth-child(4) {
-  animation-delay: 1.1s;
-}
-
-.student-details p:nth-child(5) {
-  animation-delay: 1.3s;
-}
-
-.student-details p:nth-child(6) {
-  animation-delay: 1.5s;
-}
-
-.student-details p:nth-child(7) {
-  animation-delay: 1.7s;
-}
+.student-details p:nth-child(1) { animation-delay: 0.5s; }
+.student-details p:nth-child(2) { animation-delay: 0.7s; }
+.student-details p:nth-child(3) { animation-delay: 0.9s; }
+.student-details p:nth-child(4) { animation-delay: 1.1s; }
+.student-details p:nth-child(5) { animation-delay: 1.3s; }
+.student-details p:nth-child(6) { animation-delay: 1.5s; }
+.student-details p:nth-child(7) { animation-delay: 1.7s; }
 
 .footer {
   position: absolute;
@@ -157,7 +137,7 @@ body {
 
 /* Fade-in effect for profile photo */
 .fadeIn {
-  animation: fadeIn 1s ease-out;
+  animation: fadeIn 1s ease-out forwards;
 }
 
 @keyframes fadeIn {
@@ -166,13 +146,13 @@ body {
 }
 
 /* Slide-in effect for each student detail */
-.slideIn {
-  animation: slideIn 1s ease-out forwards;
-}
-
 @keyframes slideIn {
   0% { transform: translateX(-30px); opacity: 0; }
   100% { transform: translateX(0); opacity: 1; }
+}
+
+.slideIn {
+  animation: slideIn 1s ease-out forwards;
 }
 
 /* Smooth transition effect for the ID Card container */
@@ -183,13 +163,4 @@ body {
 #idCard:hover {
   transform: scale(1.05);
   opacity: 0.95;
-}
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-.fadeIn {
-  animation: fadeIn 1s ease-out forwards;
 }
