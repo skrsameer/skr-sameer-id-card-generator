@@ -6,8 +6,11 @@
   <title>SKR SAMEER ID CARD</title>
   <link rel="stylesheet" href="page8.css" />
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+ <!-- html2canvas लाइब्रेरी -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- jsPDF लाइब्रेरी -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   
 </head>
 <body>
@@ -49,9 +52,8 @@
         +91 <span id="school-phone-no">N/A</span>
       </div>
     </div>
-    
-<button onclick="downloadCard()">Download</button>
-  </div>
+
+  <button class="download-btn" onclick="downloadCard()">Download</button>
 
   <!-- Footer -->
   <footer class="main-footer">Website Made by SKR SAMEER</footer>
