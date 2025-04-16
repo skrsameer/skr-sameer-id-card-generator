@@ -8,9 +8,6 @@
   
   <!-- html2canvas लाइब्रेरी -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  
-  <!-- jsPDF लाइब्रेरी -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <!-- Home Button -->
@@ -51,7 +48,7 @@
     </div>
 
     <!-- Download Button -->
-    <button class="download-btn" onclick="downloadCard()">Download</button>
+    <button class="download-btn" onclick="downloadCard()">Download as Image</button>
   </div>
 
   <!-- Footer -->
@@ -71,8 +68,8 @@
       document.getElementById("post").textContent = localStorage.getItem("post") || "N/A";
       document.getElementById("district").textContent = localStorage.getItem("district") || "N/A";
       document.getElementById("pincode").textContent = localStorage.getItem("pincode") || "N/A";
-      document.getElementById("session").textContent = localStorage.getItem("session") || "N/A";
-      document.getElementById("school-phone-no").textContent = localStorage.getItem("schoolPhone") || "N/A";
+      document.getElementById("session").textContent = localStorage.getItem("session") || "2024-25";
+      document.getElementById("school-phone-no").textContent = localStorage.getItem("schoolPhone") || "0000000000";
 
       const photo = localStorage.getItem("photo");
       if (photo) {
@@ -83,34 +80,31 @@
       }
     }
 
+    // ✅ Download as PNG
     async function downloadCard() {
-      const { jsPDF } = window.jspdf;
       const card = document.getElementById("idCard");
 
-      // Disable animations before capturing
+      // Hide animations for capture
       document.querySelectorAll(".student-details p").forEach(p => {
         p.style.animation = "none";
         p.style.opacity = "1";
       });
+      const img = document.getElementById("profilePhoto");
+      img.style.animation = "none";
+      img.style.opacity = "1";
 
       const canvas = await html2canvas(card, {
         scale: 3,
         useCORS: true
       });
 
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: [85.6, 54] // ID card size in mm
-      });
-
-      pdf.addImage(imgData, 'PNG', 0, 0, 85.6, 54);
-      pdf.save("ID_Card.pdf");
+      const link = document.createElement("a");
+      link.download = "ID_Card.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
     }
 
     window.onload = loadFormData;
   </script>
-<script src="page8.js"></script>
 </body>
 </html>
