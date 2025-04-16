@@ -27,21 +27,17 @@ window.onload = function () {
   getElement("school-phone-no").textContent = localStorage.getItem("schoolPhone") || "0000000000";
 
   // सभी डिटेल्स पर एनिमेशन लगाएं
-  document.querySelectorAll(".student-details span").forEach((el) => {
-    el.classList.add("slideIn");
+  document.getElementById("downloadBtn").addEventListener("click", function () {
+  const card = document.getElementById("idCard");
+
+  html2canvas(card, {
+    allowTaint: true,
+    useCORS: true,
+    scale: 4 // High quality download
+  }).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "ID_Card.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
   });
-};
-
-// डाउनलोड बटन की फंक्शनालिटी
-function downloadPNG() {
-    const card = document.querySelector('.id-card');  // ID कार्ड वाला बॉक्स
-
-    html2canvas(card, {
-  scale: 3, // ज्यादा स्केल से इमेज हाई-क्वालिटी में बनेगी
-  useCORS: true // अगर external images हों तो ये जरूरी है
-}).then(canvas => {
-  const link = document.createElement("a");
-  link.download = "ID_Card.png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
 });
