@@ -33,27 +33,28 @@ window.onload = function () {
 };
 
 // डाउनलोड बटन की फंक्शनालिटी
-function downloadCard() {
+async function downloadCard() {
+  const { jsPDF } = window.jspdf;
   const card = document.getElementById("idCard");
 
-  // Ensure image fully visible before capture
-  const img = document.getElementById("profilePhoto");
-  img.style.opacity = "1";
-  img.style.animation = "none";
-
-  html2canvas(card, {
-    scale: 3,
-    useCORS: true
-  }).then((canvas) => {
+  html2canvas(card, { scale: 3 }).then((canvas) => {
     const imgData = canvas.toDataURL("image/png");
 
     const pdf = new jsPDF({
-      orientation: 'portrait',
-      unit: 'in',
-      format: [3.4, 2.2] // [height, width]
+      orientation: "portrait",
+      unit: "mm",
+      format: [85.6, 54] // ID Card Size in mm (credit card size)
     });
 
-    pdf.addImage(imgData, 'PNG', 0, 0, 2.3, 3.7); // x, y, width, height
+    // ID कार्ड का center में placement
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = 85.6;
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    const x = (85.6 - pdfWidth) / 2;
+    const y = (54 - pdfHeight) / 2;
+
+    pdf.addImage(imgData, "PNG", x, y, pdfWidth, pdfHeight);
     pdf.save("ID_Card.pdf");
   });
 }
