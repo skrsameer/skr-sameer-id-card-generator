@@ -33,31 +33,19 @@ window.onload = function () {
 };
 
 // डाउनलोड बटन की फंक्शनालिटी
-async function downloadCard() {
-  const { jsPDF } = window.jspdf;
-  const card = document.getElementById("idCard");
-
-  // Download से पहले animations हटाएं
-  document.querySelectorAll(".student-details p").forEach((p) => {
-    p.style.animation = "none";
-    p.style.opacity = "1";
-  });
-  const img = document.getElementById("profilePhoto");
-  img.style.animation = "none";
-  img.style.opacity = "1";
-
-  // canvas बनाएँ
-  const canvas = await html2canvas(card, { scale: 3, useCORS: true });
-  const imgData = canvas.toDataURL("image/png");
-
-  // PDF बनाएं
-  const pdf = new jsPDF({
-    orientation: "portrait",
-    unit: "mm",
-    format: [85.6, 54], // ID card standard size
-  });
-
-  // पूरी image add करें
-  pdf.addImage(imgData, "PNG", 0, 0, 85.6, 54);
-  pdf.save("ID_Card.pdf");
+function downloadPNG() {
+    const card = document.querySelector('.id-card');  // ID कार्ड का तत्व
+    html2canvas(card, { 
+        useCORS: true, 
+        logging: true, 
+        allowTaint: true 
+    }).then((canvas) => {
+        const dataURL = canvas.toDataURL('image/png'); // PNG डेटा URL बनाना
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'id_card.png'; // डाउनलोड के लिए फ़ाइल का नाम
+        link.click(); // लिंक पर क्लिक करना
+    }).catch((error) => {
+        console.error('PNG जनरेट करने में त्रुटि: ', error);
+    });
 }
