@@ -34,18 +34,20 @@ window.onload = function () {
 
 // डाउनलोड बटन की फंक्शनालिटी
 function downloadPNG() {
-    const card = document.querySelector('.id-card');  // ID कार्ड का तत्व
-    html2canvas(card, { 
-        useCORS: true, 
-        logging: true, 
-        allowTaint: true 
+    const card = document.querySelector('.id-card');  // ID कार्ड वाला बॉक्स
+
+    html2canvas(card, {
+        useCORS: true,          // ताकि background image ठीक से लोड हो
+        allowTaint: true,       
+        backgroundColor: null,  // बैकग्राउंड ट्रांसपेरेंट रखने के लिए
+        scale: 2                // 2 गुना ज़्यादा रेजोल्यूशन में इमेज बनेगी
     }).then((canvas) => {
-        const dataURL = canvas.toDataURL('image/png'); // PNG डेटा URL बनाना
+        const dataURL = canvas.toDataURL('image/png');  // PNG इमेज बनाएँ
         const link = document.createElement('a');
         link.href = dataURL;
-        link.download = 'id_card.png'; // डाउनलोड के लिए फ़ाइल का नाम
-        link.click(); // लिंक पर क्लिक करना
+        link.download = 'id_card.png'; // डाउनलोड फाइल का नाम
+        link.click(); // डाउनलोड चालू करें
     }).catch((error) => {
-        console.error('PNG जनरेट करने में त्रुटि: ', error);
+        console.error('डाउनलोड में समस्या:', error);
     });
 }
