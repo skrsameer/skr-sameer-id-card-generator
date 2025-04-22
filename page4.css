@@ -1,17 +1,19 @@
+/* Reset and Base Styles */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   position: relative;
 }
 
+/* Menu Container Styles */
 .menu-container {
   position: fixed;
   top: 0;
-  right: 0; /* left se right kiya */
+  right: 0; /* right alignment for the menu */
   width: 100%;
   max-width: 400px;
   background: white;
-  border-left: 1px solid #ddd; /* left border add kiya */
+  border-left: 1px solid #ddd; /* left border */
   height: 100vh;
   padding: 20px;
   box-sizing: border-box;
@@ -19,6 +21,7 @@ body {
   transition: transform 0.3s ease;
 }
 
+/* Menu Header */
 .menu-header {
   display: flex;
   justify-content: space-between;
@@ -31,16 +34,13 @@ body {
   font-weight: bold;
 }
 
-.skr {
+/* Stylize "SKR" and "SAMEER" */
+.skr, .sameer {
   color: #0066ff;
   font-style: italic;
 }
 
-.sameer {
-  color: #0066ff;
-  font-style: italic;
-}
-
+/* UID Style */
 .uid {
   font-size: 14px;
   color: #333;
@@ -48,6 +48,7 @@ body {
   margin-right: 10px;
 }
 
+/* Close Button Style */
 .close-btn {
   background: #eee;
   border: none;
@@ -57,6 +58,7 @@ body {
   border-radius: 5px;
 }
 
+/* Menu Links Styling */
 .menu-links {
   list-style: none;
   padding: 0;
@@ -79,10 +81,28 @@ body {
   background: #f2f2f2;
 }
 
+/* Footer Styling */
 .footer {
   position: absolute;
-  bottom: 500px;
-  right: 140px;
+  bottom: 20px;
+  right: 20px;
   font-size: 16px;
   color: #444;
+}
+
+/* Social Media Links Styling */
+.social-links {
+  margin-top: 20px;
+}
+
+.social-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #007bff;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #0056b3;
 }

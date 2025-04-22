@@ -26,14 +26,14 @@ window.onload = function () {
   getElement("session").textContent = localStorage.getItem("session") || "2024-25";
   getElement("school-phone-no").textContent = localStorage.getItem("schoolPhone") || "0000000000";
 
-  // सभी डिटेल्स पर एनिमेशन लगाएं
-  document.getElementById("downloadBtn").addEventListener("click", function () {
+document.getElementById("downloadBtn").addEventListener("click", function () {
   const card = document.getElementById("idCard");
 
   html2canvas(card, {
     allowTaint: true,
     useCORS: true,
-    scale: 4 // High quality download
+    backgroundColor: null, // Background ke saath capture karega
+    scale: 4 // High quality
   }).then(canvas => {
     const link = document.createElement("a");
     link.download = "ID_Card.png";

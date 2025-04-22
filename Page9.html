@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QR Code Generator - SKR SAMEER</title>
+  <link rel="stylesheet" href="page9.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <button class="back-btn" onclick="goBack()">&#8592;</button>
+      <h1>QR Code Generator</h1>
+    </div>
+
+    <p class="instruction">Select a type and enter value to generate QR Code</p>
+
+    <div class="form-group">
+      <select id="qrType" onchange="showInputField()">
+        <option value="" disabled selected>Select Type</option>
+        <option value="pdf">PDF</option>
+        <option value="image">Image</option>
+        <option value="phone">Phone No.</option>
+        <option value="url">URL</option>
+      </select>
+
+      <input type="text" id="textInput" style="display:none" placeholder="Enter value here"/>
+
+      <button class="qr-btn" onclick="generateQR()">Generate QR Code</button>
+    </div>
+
+    <div id="qrPreview" style="display:none">
+      <div id="qrcode" class="qr-box"></div>
+      <a id="downloadBtn" href="#" download="qrcode.png" class="qr-btn">Download QR Code</a>
+    </div>
+    <div class="footer">
+      This Website is Created by SKR SAMEER
+      <div class="social-links">
+        <a href="https://youtube.com/@desi_star_0.2?si=ck4Q68-lBtCoTaBY" target="_blank">YouTube</a>
+        <a href="https://www.instagram.com/official_skr_sameer_01" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/0HyperGenAi" target="_blank">Facebook</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="page9.js"></script>
+</body>
+</html>

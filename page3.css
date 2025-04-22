@@ -1,76 +1,156 @@
-body {
+/* Reset and Base Styles */
+* {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
     background-color: white;
     text-align: center;
+    overflow-x: hidden;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Fade-in effect on page load */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .container {
-    margin-top: 50px;
+    margin-top: 60px;
+    animation: slideIn 1s ease-in-out;
+}
+
+/* Slide In Container */
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .icon {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 10px;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+    transition: transform 0.4s ease;
+}
+
+/* Icon hover zoom */
+.icon:hover {
+    transform: scale(1.2) rotate(5deg);
 }
 
 h1 {
     color: #003366;
     margin-bottom: 30px;
+    font-size: 32px;
+    position: relative;
 }
 
+/* Glowing underline on h1 */
+h1::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background-color: #007bff;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    border-radius: 10px;
+}
+
+/* Buttons */
 .btn {
     display: block;
-    width: 300px;
+    width: 280px;
     padding: 15px;
-    margin: 10px auto;
+    margin: 12px auto;
     background-color: #007bff;
     color: white;
     font-size: 16px;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Hover with glowing VFX */
 .btn:hover {
     background-color: #0056b3;
+    box-shadow: 0 0 15px #007bff, 0 0 25px #0056b3;
 }
 
+/* Icon inside button */
 .btn .icon {
     margin-right: 10px;
     font-size: 18px;
+    vertical-align: middle;
 }
 
+/* Footer */
 .footer {
     margin-top: 40px;
     color: #666;
     font-size: 14px;
+    animation: fadeIn 2s ease-in;
 }
 
-{
-  margin: 0;
-  padding: 0;
-}
-
+/* Settings Button */
 .settings-button {
-  position: absolute;
-  top: 15px;
-  right: 20px;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 10;
 }
 
 .settings-button button {
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #000;
-  transition: color 0.3s;
+    background-color: transparent;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: #000;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
+/* Gear Animation */
 .settings-button button:hover {
-  color: #007bff;
-} 
+    color: #007bff;
+    transform: rotate(90deg);
+}
 
+/* Social Links */
+.social-links {
+    margin-top: 20px;
+}
+
+.social-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #007bff;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: #0056b3;
+}
+.container {
+  transition: opacity 0.3s ease-out;
+}

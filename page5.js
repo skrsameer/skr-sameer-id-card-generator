@@ -1,4 +1,3 @@
-// Form submission handling and data saving in localStorage
 document.getElementById('idCardForm').addEventListener('submit', function (event) {
   event.preventDefault(); // Prevent form submission from refreshing the page
 
@@ -34,22 +33,13 @@ document.getElementById('idCardForm').addEventListener('submit', function (event
 
   // Redirect to page 8 for preview
   window.location.href = "page8.html";
-});
 
 // Photo upload handler
 function handlePhotoUpload(event) {
   const photoFile = event.target.files[0];
-  if (photoFile) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      localStorage.setItem("photo", e.target.result); // Save the photo to localStorage
-      const photoPreview = document.getElementById('photoPreview');
-      photoPreview.src = e.target.result; // Show the preview of the photo
-      photoPreview.style.display = 'block'; // Ensure photo preview is visible
-    };
-    reader.readAsDataURL(photoFile); // Read the image as a DataURL
-  }
-}
-
-// Add event listener for the file input (photo upload)
-document.getElementById('photo').addEventListener('change', handlePhotoUpload);
+  
+indow.goBack = function () {
+    window.location.href = "page3.html";
+  };
+});
+ 

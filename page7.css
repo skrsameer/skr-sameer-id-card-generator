@@ -1,34 +1,70 @@
-/* style.css */
+* {
+  box-sizing: border-box;
+}
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f6f8;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
   margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  flex-direction: column;
+  padding: 20px;
+}
+
+.back-arrow {
+  font-size: 18px;
+  color: #444;
+  cursor: pointer;
+  margin-bottom: 10px;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.back-arrow:hover {
+  color: #28a745;
 }
 
 .container {
-  text-align: center;
-  padding: 20px;
   max-width: 400px;
-  width: 100%;
+  background: #ffffff;
+  margin: auto;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  position: relative;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.4s ease;
 }
 
-.logo {
-  font-size: 2.5rem;
-  color: #1e5ed9;
-  font-weight: bold;
-  margin-bottom: 10px;
+header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-h2 {
-  font-weight: 500;
-  margin-bottom: 20px;
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header h1 {
+  font-size: 22px;
+  color: blue;
+}
+
+.back-btn {
+  background: none;
+  border: 2px solid green;
+  color: black;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #00ffff;
+  color: white;
 }
 
 .form-card {

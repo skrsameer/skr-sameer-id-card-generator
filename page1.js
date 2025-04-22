@@ -1,22 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector("form");
+  const form = document.getElementById("loginForm");
+  const userID = document.getElementById("userID");
+  const userPASS = document.getElementById("userPASS");
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const inputs = form.querySelectorAll("input");
-    const enteredID = inputs[0].value.trim();
-    const enteredPASS = inputs[1].value.trim();
+    const enteredID = userID.value.trim();
+    const enteredPASS = userPASS.value.trim();
 
     const storedID = localStorage.getItem("userID");
     const storedPASS = localStorage.getItem("userPASS");
 
     if (enteredID === storedID && enteredPASS === storedPASS) {
-      alert("Login Successful!");
-      window.location.href = "page3.html"; // यहाँ redirect पेज डालो
+      // Fade out animation on successful login
+      form.classList.add("fade-out");
+      setTimeout(() => {
+        alert("Login Successful!");
+        window.location.href = "page3.html";
+      }, 500);
     } else {
-      alert("Invalid ID or Password");
+      // Shake animation for error
       form.classList.add("shake");
+      alert("Invalid ID or Password");
       setTimeout(() => form.classList.remove("shake"), 500);
     }
   });

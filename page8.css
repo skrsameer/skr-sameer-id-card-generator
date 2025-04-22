@@ -102,14 +102,16 @@ body {
 }
 
 .download-btn {
-  margin-top: 40px;
-  padding: 6px 14px;
-  font-size: 12px;
-  background: #006400;
-  color: white;
+  width: 100%;
+  padding: 12px;
+  background-color: blue;
   border: none;
-  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  margin-top: 20px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .download-btn:hover {
@@ -120,7 +122,7 @@ body {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: #006400;
+  background: blue;
   color: #fff;
   border: none;
   padding: 6px 12px;
@@ -129,11 +131,23 @@ body {
   cursor: pointer;
 }
 
-.main-footer {
+.footer {
+  text-align: center;
   font-size: 12px;
-  margin-top: 40px;
-  color: #555;
+  color: #666;
+  margin-top: 20px;
 }
+
+.footer .social-links a {
+  margin: 0 6px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.footer .social-links a:hover {
+  text-decoration: underline;
+}
+
 
 /* Fade-in effect for profile photo */
 .fadeIn {

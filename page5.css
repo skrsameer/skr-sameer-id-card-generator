@@ -1,34 +1,50 @@
-/* Global styles */
 body {
-  margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to right, #f0f4f8,#d9e2ec);
-  color: #333;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 20px;
 }
-
-/* Form container */
-.form-container {
-  max-width: 700px;
-  margin: 60px auto;
+.container {
+max-width: 400px;
   background: #ffffff;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 1s ease-out;
-  transition: all 0.3s ease-in-out;
+  margin: auto;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  position: relative;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.4s ease;
+}
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 500;
+}
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
+.header h1 {
+  font-size: 22px;
+  color: blue;
 }
 
-/* Headings */
-h1 {
-  text-align: center;
-  font-size: 2.5em;
-  color: mediumspringgreen;
-  margin-bottom: 10px;
+.back-btn {
+  background: none;
+  border: 2px solid green;
+  color: black;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #00ffff;
+  color: white;
 }
 
 .subtitle {
@@ -96,21 +112,21 @@ input[type="radio"] {
 
 /* Button */
 button {
-  margin-top: 30px;
   width: 100%;
-  padding: 14px;
-  font-size: 1.1em;
+  padding: 12px;
+  background-color: #28a745;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(to right, #007bff, #0056b3);
-  color: #fff;
+  color: white;
+  font-size: 16px;
+  margin-top: 20px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-  background: linear-gradient(to right, #0056b3, #004085);
-  transform: translateY(-2px);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #00ffff88;
 }
 
 /* Footer */
@@ -136,18 +152,4 @@ button:hover {
 
 .social-links a:hover {
   color: #004085;
-}
-.fade-in {
-  animation: fadeIn 0.6s ease-in-out forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
