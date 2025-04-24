@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     container.style.transition = "opacity 0.3s ease-out";
     container.style.opacity = 0;
     setTimeout(() => {
-      window.location.href = "page9.html";
+      window.location.href = "Page9.html";
     }, 300);
   });
 
