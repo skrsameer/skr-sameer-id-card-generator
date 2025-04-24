@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const qrPreview = document.getElementById("qrPreview");
   const downloadBtn = document.getElementById("downloadBtn");
 
-  // Function to show placeholder based on type
+  // Input Field Placeholder बदलने के लिए
   window.showInputField = function () {
     const type = qrType.value;
     textInput.style.display = "block";
@@ -20,11 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     qrPreview.style.display = "none";
     qrcodeContainer.innerHTML = "";
+    downloadBtn.style.display = "none";
   };
 
-  // Function to generate QR
+  // QR Code Generate करने का Function
   window.generateQR = function () {
-    const type = qrType.value;
     const input = textInput.value.trim();
 
     if (!input) {
@@ -32,32 +32,33 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Clear previous QR code
+    // पुराने QR हटाओ
     qrcodeContainer.innerHTML = "";
 
-    // Generate new QR
-    new QRCode(qrcodeContainer, {
+    // नया QR बनाओ
+    const qr = new QRCode(qrcodeContainer, {
       text: input,
-      width: 512,
-      height: 512,
+      width: 300,
+      height: 300,
       colorDark: "#000000",
       colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
+      correctLevel: QRCode.CorrectLevel.H,
     });
 
-    // Show download button after QR appears
-  setTimeout(() => {
-    const canvas = qrcodeContainer.querySelector("canvas");
-    if (canvas) {
-      const dataUrl = canvas.toDataURL("image/png");
-      downloadBtn.href = dataUrl;
-      downloadBtn.download = "qr-code.png";
-      downloadBtn.style.display = "inline-block"; // Show button
-    }
-  }, 300);
+    // Download लिंक तैयार करो
+    setTimeout(() => {
+      const canvas = qrcodeContainer.querySelector("canvas");
+      if (canvas) {
+        const dataUrl = canvas.toDataURL("image/png");
+        downloadBtn.href = dataUrl;
+        downloadBtn.download = "qr-code.png";
+        downloadBtn.style.display = "inline-block";
+        qrPreview.style.display = "block";
+      }
+    }, 300);
   };
 
-  // Go back to previous page
+  // Back बटन
   window.goBack = function () {
     window.location.href = "page3.html";
   };
