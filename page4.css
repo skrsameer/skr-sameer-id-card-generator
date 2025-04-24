@@ -1,108 +1,123 @@
-/* Reset and Base Styles */
-body {
+/* Base Reset */
+* {
   margin: 0;
-  font-family: Arial, sans-serif;
-  position: relative;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Menu Container Styles */
+/* Body Style */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f4f4;
+}
+
+/* Menu Panel */
 .menu-container {
   position: fixed;
   top: 0;
-  right: 0; /* right alignment for the menu */
+  right: 0;
   width: 100%;
   max-width: 400px;
-  background: white;
-  border-left: 1px solid #ddd; /* left border */
   height: 100vh;
+  background: #fff;
   padding: 20px;
-  box-sizing: border-box;
-  z-index: 999;
-  transition: transform 0.3s ease;
+  box-shadow: -3px 0 15px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
 }
 
-/* Menu Header */
+.menu-container.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Header */
 .menu-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .menu-header h2 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 22px;
+  color: #333;
 }
 
-/* Stylize "SKR" and "SAMEER" */
 .skr, .sameer {
   color: #0066ff;
   font-style: italic;
 }
 
-/* UID Style */
 .uid {
   font-size: 14px;
-  color: #333;
-  margin-left: auto;
+  color: #666;
   margin-right: 10px;
 }
 
-/* Close Button Style */
 .close-btn {
   background: #eee;
   border: none;
-  padding: 5px 10px;
+  padding: 6px 10px;
+  border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 5px;
 }
 
-/* Menu Links Styling */
+/* Menu Links */
 .menu-links {
   list-style: none;
-  padding: 0;
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .menu-links li {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ddd;
 }
 
 .menu-links a {
   display: block;
+  padding: 12px;
+  color: #333;
   text-decoration: none;
-  color: #222;
-  padding: 10px;
+  font-size: 16px;
   transition: background 0.3s;
 }
 
 .menu-links a:hover {
-  background: #f2f2f2;
+  background: #f0f0f0;
 }
 
-/* Footer Styling */
+/* Footer */
 .footer {
   position: absolute;
-  bottom: 20px;
+  bottom: 60px;
+  font-size: 14px;
+  color: #888;
   right: 20px;
-  font-size: 16px;
-  color: #444;
 }
 
-/* Social Media Links Styling */
+/* Social Media */
 .social-links {
-  margin-top: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
 }
 
 .social-links a {
-  margin: 0 10px;
+  margin-right: 10px;
   text-decoration: none;
   color: #007bff;
-  font-size: 18px;
-  transition: color 0.3s ease;
+  font-size: 16px;
 }
 
 .social-links a:hover {
   color: #0056b3;
+}
+
+/* Mobile Responsive */
+@media (max-width: 500px) {
+  .menu-container {
+    width: 100%;
+    max-width: 100%;
+  }
 }
