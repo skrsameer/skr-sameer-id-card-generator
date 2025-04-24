@@ -45,16 +45,16 @@ document.addEventListener("DOMContentLoaded", () => {
       correctLevel: QRCode.CorrectLevel.H
     });
 
-    // Show download button after short delay
-    setTimeout(() => {
-      const canvas = qrcodeContainer.querySelector("canvas");
-      if (canvas) {
-        const dataUrl = canvas.toDataURL("image/png");
-        downloadBtn.href = dataUrl;
-        downloadBtn.download = "qr-code.png";
-        qrPreview.style.display = "block";
-      }
-    }, 300);
+    // Show download button after QR appears
+  setTimeout(() => {
+    const canvas = qrcodeContainer.querySelector("canvas");
+    if (canvas) {
+      const dataUrl = canvas.toDataURL("image/png");
+      downloadBtn.href = dataUrl;
+      downloadBtn.download = "qr-code.png";
+      downloadBtn.style.display = "inline-block"; // Show button
+    }
+  }, 300);
   };
 
   // Go back to previous page
