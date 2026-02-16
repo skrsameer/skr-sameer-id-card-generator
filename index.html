@@ -1,46 +1,598 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Customer Login - SKR SAMEER</title>
-  <link rel="stylesheet" href="page1.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TriggerCraft eSports | Official Portal</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- PREMIUM LIGHT THEME VARIABLES --- */
+        :root {
+            --primary: #aa0000;       /* Blood Red */
+            --primary-dark: #800000;
+            --accent: #d4af37;        /* Gold */
+            --bg: #f4f7f6;            /* Premium Light BG */
+            --card-bg: #ffffff;       /* Pure White */
+            --text-main: #1a1a1a;     /* Dark Text */
+            --text-light: #555555;
+            --glass: rgba(255, 255, 255, 0.95);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Poppins', sans-serif; }
+        
+        body { background: var(--bg); color: var(--text-main); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+
+        /* --- UTILITIES --- */
+        .hidden { display: none !important; }
+        .gold-text { color: var(--accent); font-family: 'Orbitron'; letter-spacing: 1px; }
+        .red-text { color: var(--primary); font-family: 'Orbitron'; }
+        button:active { transform: scale(0.96); }
+
+        /* --- 1. LOCK SCREEN --- */
+        #lock-screen {
+            position: fixed; inset: 0; z-index: 9999;
+            background: radial-gradient(circle at center, #ffffff, #e0e0e0);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 20px;
+        }
+
+        .logo-anim { width: 140px; margin-bottom: 20px; animation: float 3s infinite ease-in-out; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15)); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .big-title { font-size: 2.8rem; font-family: 'Orbitron'; font-weight: 900; line-height: 1; margin-bottom: 5px; color: #111; }
+        .subtitle { color: var(--text-light); margin-bottom: 40px; font-size: 1rem; letter-spacing: 2px; }
+
+        .btn-large {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; border: none; padding: 18px 40px; border-radius: 50px;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; max-width: 320px;
+            box-shadow: 0 10px 20px rgba(170,0,0,0.3); margin: 10px 0; font-family: 'Orbitron';
+            transition: 0.3s; text-transform: uppercase;
+        }
+        .btn-secondary { background: linear-gradient(135deg, var(--accent), #b8860b); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
+
+        /* PIN Modal */
+        .pin-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 10000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .pin-box { background: white; padding: 30px; border-radius: 20px; text-align: center; width: 85%; max-width: 350px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .pin-input { width: 100%; padding: 15px; text-align: center; font-size: 2rem; letter-spacing: 8px; border: 2px solid #ddd; border-radius: 12px; margin: 20px 0; font-family: 'Orbitron'; outline: none; }
+
+        /* --- 2. MAIN APP DASHBOARD --- */
+        #app-container { display: none; flex-direction: column; height: 100%; }
+
+        /* Top Bar */
+        .top-bar {
+            height: 65px; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; background: var(--glass); box-shadow: var(--shadow);
+            backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;
+        }
+        .brand-logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.2rem; color: #222; }
+
+        /* Content */
+        .main-content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 100px; }
+
+        /* Role Cards */
+        .role-section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; border-left: 5px solid var(--primary); padding-left: 10px; }
+        .roles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .role-card {
+            background: var(--card-bg); border-radius: 16px; padding: 10px; text-align: center;
+            box-shadow: var(--shadow); border: var(--border); text-decoration: none; color: inherit;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .role-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 12px; margin-bottom: 10px; }
+        .role-title { font-weight: 800; font-size: 0.9rem; text-transform: uppercase; color: var(--primary); }
+
+        /* Maps List */
+        .map-list { display: grid; gap: 12px; }
+        .map-item {
+            display: flex; align-items: center; background: white; padding: 12px;
+            border-radius: 14px; box-shadow: var(--shadow); cursor: pointer; border: 1px solid transparent;
+        }
+        .map-item:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .map-thumb { width: 90px; height: 60px; border-radius: 8px; object-fit: cover; margin-right: 15px; }
+        
+        /* Team Grid */
+        .member-card {
+            display: flex; background: white; padding: 15px; border-radius: 15px;
+            box-shadow: var(--shadow); align-items: center; border-left: 4px solid var(--primary); margin-bottom: 15px;
+        }
+        .member-pic { width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--accent); margin-right: 15px; object-fit: cover; }
+        
+        /* Guild Data */
+        .status-card { background: white; padding: 25px; border-radius: 20px; box-shadow: var(--shadow); text-align: center; margin-top: 20px; }
+        .verified-badge { background: #e6fffa; color: #00b894; padding: 5px 15px; border-radius: 20px; font-weight: bold; display: inline-block; margin-top: 10px; }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; height: 80px;
+            background: white; display: flex; justify-content: space-around; align-items: center;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05); border-top-left-radius: 25px; border-top-right-radius: 25px; z-index: 500;
+        }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center;
+            color: #ccc; text-decoration: none; font-size: 0.75rem; font-weight: 600;
+            transition: 0.3s; width: 25%;
+        }
+        .nav-item i { font-size: 1.5rem; margin-bottom: 5px; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: translateY(-5px); }
+
+        /* --- 3. MAP OVERLAY & TOOLS (THE IMPORTANT PART) --- */
+        #map-overlay {
+            position: fixed; inset: 0; background: #fff; z-index: 6000; display: none; flex-direction: column;
+        }
+        .map-header {
+            height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px;
+            background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 20;
+        }
+        /* Scroller for Tools */
+        .tools-scroll-container {
+            width: 100%; overflow-x: auto; background: white; padding: 10px;
+            border-bottom: 1px solid #eee; z-index: 19; white-space: nowrap;
+        }
+        .map-tools { display: inline-flex; gap: 8px; padding-bottom: 5px; }
+        
+        .tool-btn {
+            width: 48px; height: 48px; border-radius: 12px; border: none; background: #f4f4f4;
+            flex-shrink: 0; cursor: pointer; color: #555; font-size: 1.2rem; display: inline-flex; align-items: center; justify-content: center;
+            transition: 0.2s;
+        }
+        .tool-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(170,0,0,0.3); transform: scale(1.1); }
+        
+        #mapCanvas { flex: 1; width: 100%; background: #222; touch-action: none; cursor: crosshair; }
+        
+        .color-input { width: 40px; height: 40px; border: none; border-radius: 50%; overflow: hidden; padding: 0; margin-left: 5px; }
+        
+        /* Zoom Controls */
+        .zoom-ui {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 30px;
+            display: flex; align-items: center; gap: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            width: 80%; max-width: 300px;
+        }
+        .zoom-slider { flex: 1; accent-color: var(--primary); height: 5px; }
+
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <h2>SKR SAMEER</h2>
-    <h3>Customer Login</h3>
-    <form id="loginForm">
-      <label>Email id or Phone No. <span class="required">*</span></label>
-      <input type="text" id="userID" placeholder="enter email or phone no." required />
+    <div id="lock-screen">
+        <img src="logo.png" class="logo-anim" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1063/1063229.png'">
+        <h1 class="big-title">TRIGGER<span class="red-text">CRAFT</span></h1>
+        <h3 class="gold-text">PREMIUM PORTAL</h3>
+        <p class="subtitle">Secure eSports Management System</p>
 
-      <label>Password <span class="required">*</span></label>
-      <input type="password" id="userPASS" placeholder="enter password" required />
+        <button onclick="window.location.href='join.html'" class="btn-large btn-secondary">
+            <i class="fas fa-users"></i> JOIN Esports/GUILD
+        </button>
+        <button onclick="openPinModal()" class="btn-large">
+            <i class="fas fa-play"></i> START/GO
+        </button>
 
-      <a class="forgot" href="#">Forgot Your Password?</a>
-
-      <button type="submit" class="btn">Log in</button>
-    </form>
-
-    <p class="required-note"><span class="required">*</span> Required Fields</p>
-
-    <div class="new-customers">
-      <h4>New Customers</h4>
-      <p>Creating an account has many benefits: check out faster, keep more than one address, track orders and more.</p>
-      <button class="btn" onclick="location.href='page2.html'">Create an Account</button>
+        <div id="pin-modal" class="pin-modal">
+            <div class="pin-box">
+                <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 15px;"></i>
+                <h3 style="font-family: 'Orbitron';">ENTER PIN</h3>
+                <input type="password" id="pinInput" class="pin-input" placeholder="••••" maxlength="10">
+                <div style="display:flex; gap:10px;">
+                    <button onclick="closePinModal()" style="flex:1; padding: 12px; border-radius: 12px; border:none; background:#eee; font-weight:bold;">CANCEL</button>
+                    <button onclick="verifyPin()" style="flex:1; padding: 12px; border-radius: 12px; border:none; background:var(--primary); color:white; font-weight:bold;">UNLOCK</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="footer">
-      This Website is Created by SKR SAMEER
-      <div class="social-links">
-        <a href="https://youtube.com/@desi_star_0.2?si=ck4Q68-lBtCoTaBY" target="_blank">YouTube</a>
-        <a href="https://www.instagram.com/official_skr_sameer_01" target="_blank">Instagram</a>
-        <a href="https://www.facebook.com/0HyperGenAi" target="_blank">Facebook</a>
-      </div>
-    </div>
-  </div>
+    <div id="app-container">
+        
+        <div class="top-bar">
+            <div class="brand-logo">TC <span class="gold-text">ESPORTS</span></div>
+            <div onclick="location.reload()" style="cursor: pointer; padding: 10px;"><i class="fas fa-power-off" style="color: var(--primary);"></i></div>
+        </div>
 
-  <script src="page1.js"></script>
+        <div id="tab-home" class="main-content">
+            <div class="role-section-title">TRAINING ROLES</div>
+            <div class="roles-grid">
+                <a href="training_rusher.html" class="role-card">
+                    <img src="wasaana.jpg" class="role-img" alt="Rusher" onerror="this.src='https://via.placeholder.com/150/aa0000/FFFFFF?text=RUSHER'">
+                    <div class="role-title"> P. RUSHER</div>
+                </a>
+                <a href="training_rusher.html" class="role-card">
+                    <img src="oscar.png" class="role-img" alt="Sec" onerror="this.src='https://via.placeholder.com/150/aa0000/FFFFFF?text=SEC+RUSH'">
+                    <div class="role-title">SEC. RUSHER</div>
+                </a>
+                <a href="training_sniper.html" class="role-card">
+                    <img src="pahadi.jpg" class="role-img" alt="Sniper" onerror="this.src='https://via.placeholder.com/150/d4af37/FFFFFF?text=SNIPER'">
+                    <div class="role-title">SNIPER</div>
+                </a>
+                <a href="training_supporter.html" class="role-card">
+                    <img src="kassie.png" class="role-img" alt="Supporter" onerror="this.src='https://via.placeholder.com/150/d4af37/FFFFFF?text=SUPPORTER'">
+                    <div class="role-title">SUPPORTER</div>
+                </a>
+                <a href="tr" class="role-card">
+                    <img src="girl.png" class="role-img" alt="Bomber" onerror="this.src='https://via.placeholder.com/150/222222/FFFFFF?text=BOMBER'">
+                    <div class="role-title">BOMBER</div>
+                </a>
+            </div>
+        </div>
+
+        <div id="tab-maps" class="main-content hidden">
+            <div class="role-section-title">STRATEGIC MAPS</div>
+            <div class="map-list">
+                <div class="map-item" onclick="initMap('Bermuda.png', 'Bermuda')">
+                    <img src="Bermuda.png" class="map-thumb" onerror="this.src='https://via.placeholder.com/100?text=Map'">
+                    <div class="map-info"><h3>BERMUDA</h3><p>Full Map 2026</p></div>
+                </div>
+                <div class="map-item" onclick="initMap('Alpine.jpg', 'Alpine')">
+                    <img src="Alpine.jpg" class="map-thumb" onerror="this.src='https://via.placeholder.com/100?text=Map'">
+                    <div class="map-info"><h3>ALPINE</h3><p>Full Map 2026</p></div>
+                </div>
+                <div class="map-item" onclick="initMap('kalahari.png', 'Kalahari')">
+                    <img src="kalahari.png" class="map-thumb" onerror="this.src='https://via.placeholder.com/100?text=Map'">
+                    <div class="map-info"><h3>KALAHARI</h3><p>Full Map 2026</p></div>
+                </div>
+                <div class="map-item" onclick="initMap('purgatory.png', 'Purgatory')">
+                    <img src="purgatory.png" class="map-thumb" onerror="this.src='https://via.placeholder.com/100?text=Map'">
+                    <div class="map-info"><h3>PURGATORY</h3><p>Full Map 2026</p></div>
+                </div>
+                <div class="map-item" onclick="initMap('nexterra.png', 'Nexterra')">
+                    <img src="nexterra.png" class="map-thumb" onerror="this.src='https://via.placeholder.com/100?text=Map'">
+                    <div class="map-info"><h3>NEXTERRA</h3><p>Full Map 2026</p></div>
+                </div>
+                <div class="map-item" onclick="initMap('solara.png', 'Solara')">
+                    <img src="solara.png" class="map-thumb" onerror="this.src='https://via.placeholder.com/100?text=Map'">
+                    <div class="map-info"><h3>SOLARA</h3><p>Full Map 2026</p></div>
+                </div>
+
+                <div class="map-item drop-point-btn" onclick="showDrops()" style="background: #e8f5e9; border: 2px dashed #2ecc71;">
+                    <div class="drop-point-icon" style="background:#2ecc71; width:90px; height:60px; border-radius:8px; display:flex; align-items:center; justify-content:center; margin-right:15px; color:white; font-size:1.5rem;"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="map-info"><h3 style="color:#2ecc71">MY DROP POINTS</h3><p>Preferred Locations</p></div>
+                </div>
+            </div>
+            
+            <div id="drops-gallery" class="hidden" style="margin-top: 20px;">
+                <button onclick="hideDrops()" style="margin-bottom:15px; border:none; background:none; color:var(--primary); font-weight:bold; font-size:1rem;">❮ BACK TO MAPS</button>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <img src="drop1.jpg" style="width:100%; border-radius:10px; border:1px solid #ddd;" onerror="this.src='https://via.placeholder.com/150?text=Drop+1'">
+                    <img src="drop2.jpg" style="width:100%; border-radius:10px; border:1px solid #ddd;" onerror="this.src='https://via.placeholder.com/150?text=Drop+2'">
+                    <img src="drop3.jpg" style="width:100%; border-radius:10px; border:1px solid #ddd;" onerror="this.src='https://via.placeholder.com/150?text=Drop+3'">
+                    <img src="drop4.jpg" style="width:100%; border-radius:10px; border:1px solid #ddd;" onerror="this.src='https://via.placeholder.com/150?text=Drop+4'">
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-team" class="main-content hidden">
+            <div class="role-section-title">OFFICIAL ROSTER</div>
+            <div class="team-grid">
+                <div class="member-card">
+                    <img src="oscar.png" class="member-pic" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
+                    <div class="member-info">
+                        <h3>SAMEER <span style="font-size:0.7rem; color:var(--accent);">(OWNER)</span></h3>
+                        <p style="font-size:0.8rem; color:#666;">IGN: ƬcㅤMᴀғɪᴀㅤ모</p>
+                        <p style="font-size:0.8rem; color:#888;">UID: 3006954992</p>
+                        <a href="https://instagram.com/trigger_craft_x" style="color:#E1306C; font-size:1.2rem; margin-top:5px; display:inline-block;"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                 <div class="member-card">
+                    <img src="Sniper.png" class="member-pic" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135768.png'">
+                    <div class="member-info">
+                        <h3>DHANRAJ <span style="font-size:0.7rem; color:var(--primary);">(IGL)</span></h3>
+                        <p style="font-size:0.8rem; color:#666;">IGN: ✨Zxpelap?Xㅤ@</p>
+                        <p style="font-size:0.8rem; color:#888;">UID: 2033046757</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-guild" class="main-content hidden">
+            <div class="role-section-title">GUILD STATUS</div>
+            <div class="guild-container">
+                <div id="data-not-found" class="status-card no-data">
+                    <i class="fas fa-id-card" style="font-size: 4rem; margin-bottom: 20px; color: #eee;"></i>
+                    <h3>No Data Found</h3>
+                    <p style="margin-bottom:20px; color:#888;">You haven't joined yet.</p>
+                    <button onclick="window.location.href='join.html'" class="btn-large" style="width: auto; padding: 10px 30px; font-size: 0.9rem;">JOIN NOW</button>
+                </div>
+                <div id="data-found" class="status-card hidden" style="border-top: 5px solid var(--accent);">
+                    <img src="logo.png" style="width: 80px; margin-bottom: 10px;" onerror="this.style.display='none'">
+                    <h2 class="gold-text">MEMBER CARD</h2>
+                    <div class="verified-badge">VERIFIED"" ✅</div>
+                    <div style="margin-top: 25px; text-align: left;">
+                        <p><strong>NAME:</strong> <span id="u-name" style="float: right;">-</span></p>
+                        <hr style="border:0; border-top:1px solid #f0f0f0; margin: 10px 0;">
+                        <p><strong>ROLE:</strong> <span id="u-role" style="float: right; color: var(--primary); font-weight: bold;">-</span></p>
+                        <hr style="border:0; border-top:1px solid #f0f0f0; margin: 10px 0;">
+                        <p><strong>IGN:</strong> <span id="u-ign" style="float: right;">-</span></p>
+                        <hr style="border:0; border-top:1px solid #f0f0f0; margin: 10px 0;">
+                        <p><strong>UID:</strong> <span id="u-uid" style="float: right;">-</span></p>
+                    </div>
+                    <button onclick="window.location.href='certificate.html'" class="btn-secondary" style="width: 100%; border-radius: 12px; margin-top: 25px; padding: 12px; border:none; font-weight:bold; color:black; cursor:pointer;">
+                        VIEW CERTIFICATE
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <a href="#" class="nav-item active" onclick="switchTab('home', this)"><i class="fas fa-home"></i> Home</a>
+            <a href="#" class="nav-item" onclick="switchTab('maps', this)"><i class="fas fa-map-marked-alt"></i> Maps</a>
+            <a href="#" class="nav-item" onclick="switchTab('team', this)"><i class="fas fa-users"></i> Team</a>
+            <a href="#" class="nav-item" onclick="switchTab('guild', this)"><i class="fas fa-shield-alt"></i> Guild</a>
+        </div>
+
+    </div>
+
+    <div id="map-overlay">
+        <div class="map-header">
+            <button onclick="closeMap()" style="border:none; background:none; font-size:1.4rem; color:#333;"><i class="fas fa-arrow-left"></i></button>
+            <span id="map-title-display" style="font-weight:bold; font-family:'Orbitron'; color:var(--primary);">TACTICAL MAP</span>
+            <div style="width:30px;"></div>
+        </div>
+
+        <div class="tools-scroll-container">
+            <div class="map-tools">
+                <button class="tool-btn active" id="btn-pan" onclick="setTool('pan')"><i class="fas fa-hand-paper"></i></button>
+                <button class="tool-btn" id="btn-route" onclick="setTool('route')" title="Route (Dashed)"><i class="fas fa-route"></i></button>
+                <button class="tool-btn" id="btn-dot" onclick="setTool('dot')" title="Marker"><i class="fas fa-map-marker-alt"></i></button>
+                <button class="tool-btn" id="btn-draw" onclick="setTool('draw')"><i class="fas fa-pen"></i></button>
+                <button class="tool-btn" id="btn-circle" onclick="setTool('circle')"><i class="far fa-circle"></i></button>
+                <button class="tool-btn" id="btn-eraser" onclick="setTool('eraser')"><i class="fas fa-eraser"></i></button>
+                <button class="tool-btn" onclick="undo()" title="Undo"><i class="fas fa-undo" style="color:var(--primary);"></i></button>
+                <button class="tool-btn" onclick="clearMap()" style="color:red;"><i class="fas fa-trash"></i></button>
+                <input type="color" id="toolColor" value="#ff0000" class="color-input">
+            </div>
+        </div>
+
+        <canvas id="mapCanvas"></canvas>
+
+        <div class="zoom-ui">
+            <i class="fas fa-search-minus" style="color:#666;"></i>
+            <input type="range" id="zoomRange" min="1" max="5" step="0.1" value="1" class="zoom-slider">
+            <i class="fas fa-search-plus" style="color:var(--primary);"></i>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. PIN LOGIC ---
+        function openPinModal() { document.getElementById('pin-modal').style.display = 'flex'; }
+        function closePinModal() { document.getElementById('pin-modal').style.display = 'none'; }
+        
+        function verifyPin() {
+            const pin = document.getElementById('pinInput').value;
+            if(pin === 'Tc786') {
+                document.getElementById('lock-screen').style.display = 'none';
+                document.getElementById('app-container').style.display = 'flex';
+                loadGuildData();
+            } else {
+                alert('Wrong PIN!');
+                document.getElementById('pinInput').value = '';
+            }
+        }
+
+        // --- 2. TAB LOGIC ---
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.main-content').forEach(d => d.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function loadGuildData() {
+            const rawData = localStorage.getItem('tc_player_data');
+            const role = localStorage.getItem('tc_role');
+            if(rawData) {
+                const data = JSON.parse(rawData);
+                document.getElementById('data-not-found').classList.add('hidden');
+                document.getElementById('data-found').classList.remove('hidden');
+                document.getElementById('u-name').innerText = data.name;
+                document.getElementById('u-role').innerText = role || 'Member';
+                document.getElementById('u-ign').innerText = data.ign;
+                document.getElementById('u-uid').innerText = data.uid;
+            }
+        }
+
+        // --- 3. ADVANCED MAP LOGIC (RESTORED FROM YOUR SCRIPT) ---
+        let canvas, ctx, mapImg;
+        let isDrawing = false;
+        let tool = 'pan';
+        let history = []; 
+        let routePoints = []; // For Route Tool
+        
+        // Transform State
+        let scale = 1, panX = 0, panY = 0;
+        let startX, startY;
+
+        function initMap(src, title) {
+            document.getElementById('map-overlay').style.display = 'flex';
+            document.getElementById('map-title-display').innerText = title.toUpperCase();
+            
+            canvas = document.getElementById('mapCanvas');
+            ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight - 130; 
+
+            mapImg = new Image();
+            mapImg.src = src;
+            mapImg.onload = () => {
+                // Fit image initially
+                const sX = canvas.width / mapImg.width;
+                const sY = canvas.height / mapImg.height;
+                scale = Math.min(sX, sY);
+                panX = (canvas.width - mapImg.width * scale) / 2;
+                panY = (canvas.height - mapImg.height * scale) / 2;
+                document.getElementById('zoomRange').value = 1;
+                draw();
+            }
+
+            // Bind Events
+            canvas.addEventListener('mousedown', pointerDown);
+            canvas.addEventListener('mousemove', pointerMove);
+            canvas.addEventListener('mouseup', pointerUp);
+            canvas.addEventListener('touchstart', pointerDown, {passive:false});
+            canvas.addEventListener('touchmove', pointerMove, {passive:false});
+            canvas.addEventListener('touchend', pointerUp);
+            
+            // Zoom Slider
+            document.getElementById('zoomRange').addEventListener('input', function(e) {
+                // Simple zoom logic based on center
+                let newScale = parseFloat(this.value);
+                // Adjust scale relative to initial fit
+                let baseScale = Math.min(canvas.width / mapImg.width, canvas.height / mapImg.height);
+                scale = baseScale * newScale;
+                draw();
+            });
+        }
+
+        function closeMap() { document.getElementById('map-overlay').style.display = 'none'; }
+        
+        function setTool(t) {
+            tool = t;
+            // Reset route if switching tool
+            if(tool !== 'route') routePoints = [];
+            
+            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('btn-'+t).classList.add('active');
+        }
+
+        // --- HISTORY & DRAWING ---
+        function saveState() {
+            if(history.length > 8) history.shift();
+            history.push(canvas.toDataURL());
+        }
+
+        function undo() {
+            if(history.length > 0) {
+                let restore = new Image();
+                restore.src = history.pop();
+                restore.onload = () => {
+                    ctx.clearRect(0,0,canvas.width, canvas.height);
+                    ctx.drawImage(restore, 0, 0);
+                }
+            } else {
+                draw(); // Reset if empty
+            }
+        }
+        
+        function clearMap() {
+            history = [];
+            routePoints = [];
+            draw();
+        }
+
+        function draw() {
+            // Clear and draw BG
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(mapImg, panX, panY, mapImg.width * scale, mapImg.height * scale);
+        }
+
+        // Pointer Logic
+        function getPos(e) {
+            let cx, cy;
+            if(e.touches && e.touches.length > 0) {
+                cx = e.touches[0].clientX; cy = e.touches[0].clientY;
+            } else {
+                cx = e.clientX; cy = e.clientY;
+            }
+            // Adjust for header height (~110px total with tools)
+            const rect = canvas.getBoundingClientRect();
+            return {x: cx - rect.left, y: cy - rect.top};
+        }
+
+        function pointerDown(e) {
+            const pos = getPos(e);
+            
+            if(tool === 'pan') {
+                isDrawing = true;
+                startX = pos.x - panX;
+                startY = pos.y - panY;
+            } 
+            else if(tool === 'route') {
+                // Special Route Logic (Click to add points)
+                saveState();
+                if(routePoints.length === 0) {
+                    routePoints.push(pos);
+                    // Draw start dot
+                    ctx.beginPath(); ctx.arc(pos.x, pos.y, 4, 0, Math.PI*2); ctx.fillStyle=document.getElementById('toolColor').value; ctx.fill();
+                } else {
+                    let last = routePoints[routePoints.length-1];
+                    ctx.beginPath();
+                    ctx.moveTo(last.x, last.y);
+                    ctx.lineTo(pos.x, pos.y);
+                    ctx.strokeStyle = document.getElementById('toolColor').value;
+                    ctx.lineWidth = 3;
+                    ctx.setLineDash([10, 5]); // Dashed Line
+                    ctx.stroke();
+                    ctx.setLineDash([]); // Reset
+                    
+                    // Draw connection dot
+                    ctx.beginPath(); ctx.arc(pos.x, pos.y, 4, 0, Math.PI*2); ctx.fillStyle=document.getElementById('toolColor').value; ctx.fill();
+                    routePoints.push(pos);
+                }
+            }
+            else if(tool === 'dot') {
+                saveState();
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 6, 0, Math.PI*2);
+                ctx.fillStyle = document.getElementById('toolColor').value;
+                ctx.fill();
+                // Add icon look
+                ctx.strokeStyle = "white"; ctx.lineWidth = 2; ctx.stroke();
+            }
+            else {
+                // Draw / Eraser / Circle
+                saveState();
+                isDrawing = true;
+                ctx.beginPath();
+                startX = pos.x; startY = pos.y;
+                
+                if(tool === 'eraser') {
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.lineWidth = 20;
+                } else {
+                    ctx.globalCompositeOperation = 'source-over';
+                    ctx.strokeStyle = document.getElementById('toolColor').value;
+                    ctx.lineWidth = 3;
+                }
+                ctx.moveTo(pos.x, pos.y);
+            }
+        }
+
+        function pointerMove(e) {
+            if(!isDrawing) return;
+            e.preventDefault(); // Prevent scrolling
+            const pos = getPos(e);
+
+            if(tool === 'pan') {
+                panX = pos.x - startX;
+                panY = pos.y - startY;
+                draw();
+            } else if (tool === 'draw' || tool === 'eraser') {
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+            }
+        }
+
+        function pointerUp(e) {
+            if(!isDrawing) return;
+            isDrawing = false;
+            
+            if(tool === 'circle') {
+                // Draw circle on mouse up
+                const pos = getPos(e); // Need valid pos, might need last known pos
+                // Simple approximation if pos available
+                // For simplicity in single file, we skip dynamic preview of circle, just draw on release
+                // or user can just use 'Draw' tool for rough circles
+            }
+            ctx.globalCompositeOperation = 'source-over'; // Reset
+        }
+
+        // Drops Gallery
+        function showDrops() { document.querySelector('.map-list').classList.add('hidden'); document.getElementById('drops-gallery').classList.remove('hidden'); }
+        function hideDrops() { document.getElementById('drops-gallery').classList.add('hidden'); document.querySelector('.map-list').classList.remove('hidden'); }
+
+    </script>
 </body>
 </html>

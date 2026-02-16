@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TriggerCraft eSports | Official Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- LIGHT THEME CSS --- */
+        :root {
+            --primary: #aa0000;      /* Dark Red */
+            --highlight: #ff0000;    /* Bright Red */
+            --gold: #b8860b;         /* Dark Gold */
+            --dark: #f0f2f5;         /* Light Background */
+            --text-main: #222222;    /* Dark Text */
+            --card-bg: #ffffff;      /* Pure White Card */
+            --border: 1px solid rgba(0,0,0,0.1);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Background Animation Canvas */
+        #particles-js {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: radial-gradient(circle at center, #ffffff 0%, #e6e6e6 100%);
+        }
+
+        /* Typography */
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+        .gold-text { color: var(--gold); font-weight: 800; }
+        .red-text { color: var(--primary); font-weight: 800; }
+
+        /* Sections */
+        section {
+            display: none; min-height: 100vh; width: 100%;
+            flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px; opacity: 0; transition: opacity 0.4s ease;
+        }
+        section.active { display: flex; opacity: 1; }
+
+        /* White Cards */
+        .glass-panel {
+            background: var(--card-bg);
+            border: var(--border);
+            padding: 30px; border-radius: 20px;
+            width: 100%; max-width: 500px;
+            box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+            animation: slideUp 0.5s ease-out;
+        }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        /* Buttons */
+        .btn-main, .btn-option {
+            background: linear-gradient(135deg, var(--primary), #800000);
+            color: white; border: none; padding: 16px; width: 100%;
+            font-family: 'Orbitron'; font-weight: bold; font-size: 1.1rem;
+            border-radius: 50px; cursor: pointer; margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(170, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(170, 0, 0, 0.4); }
+        
+        .btn-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
+        .btn-download { background: linear-gradient(135deg, #111, #333); color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        
+        .back-btn {
+            position: absolute; top: 20px; left: 20px;
+            background: #e0e0e0; border: none; color: #333;
+            padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+        }
+
+        /* Inputs */
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; font-size: 0.85rem; color: var(--primary); margin-bottom: 5px; font-weight: 700; }
+        
+        input, select {
+            width: 100%; padding: 14px; background: #fff;
+            border: 1px solid #ccc; color: #333; border-radius: 10px;
+            font-family: 'Poppins'; font-size: 1rem; transition: 0.3s;
+        }
+        input:focus, select:focus { border-color: var(--highlight); outline: none; box-shadow: 0 0 5px rgba(255,0,0,0.2); }
+
+        /* Role Cards */
+        .role-card {
+            background: #ffffff; padding: 15px; border-radius: 12px;
+            text-align: center; border: 1px solid #eee; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 10px;
+        }
+        .role-card:hover { border-color: var(--gold); background: #fffdf5; transform: translateY(-3px); }
+        .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+
+        /* Image Upload */
+        .upload-box {
+            width: 120px; height: 120px; border: 2px dashed var(--primary);
+            border-radius: 50%; margin: 10px auto; display: flex;
+            justify-content: center; align-items: center; cursor: pointer;
+            overflow: hidden; background: #f9f9f9; position: relative;
+        }
+        .upload-box img { width: 100%; height: 100%; object-fit: cover; }
+        .upload-icon { font-size: 2rem; color: var(--primary); }
+
+        .hidden { display: none !important; }
+        canvas { display: block; width: 100%; height: auto; }
+        .cert-container { width: 100%; overflow-x: auto; border: 2px solid var(--gold); border-radius: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <canvas id="particles-js"></canvas>
+
+    <section id="welcome-section" class="active">
+        <div class="glass-panel" style="text-align: center;">
+            <img src="logo.png" style="width: 100px; margin-bottom: 10px;" onerror="this.style.display='none'"> 
+            
+            <h1 style="font-size: 2.5rem; line-height: 1; color: #222;">TRIGGER<span class="red-text">CRAFT</span></h1>
+            <h3 class="gold-text" style="font-size: 1rem; letter-spacing: 5px; margin-bottom: 20px;">ESPORTS</h3>
+            <p style="font-size: 1.2rem; margin-bottom: 10px; color: #555;">Ƭcㅤᥱꕶꮲꭷꮢꭲꮪㅤ모</p>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 30px;">
+                Premier Free Fire eSports Organization.<br>
+                <span class="red-text">Founded by SKR Sameer</span>
+            </p>
+            <button onclick="navTo('selection-section')" class="btn-main">Continue</button>
+        </div>
+    </section>
+
+    <section id="selection-section">
+        <button onclick="navTo('welcome-section')" class="back-btn">❮ Back</button>
+        <h2 class="red-text">CHOOSE PATH</h2>
+        <div class="glass-panel" style="margin-top: 20px;">
+            <div class="role-card" onclick="selectPath('Tc eSports Team')" style="margin-bottom: 15px; padding: 25px;">
+                <h1 style="font-size: 2.5rem;">🏆</h1>
+                <h3 style="color: #333;">JOIN ESPORTS TEAM</h3>
+                <p style="font-size: 0.8rem; color:#666">Competitive & Tournaments</p>
+            </div>
+            <div class="role-card" onclick="selectPath('Guild Member')" style="padding: 25px;">
+                <h1 style="font-size: 2.5rem;">🛡️</h1>
+                <h3 style="color: #333;">JOIN GUILD</h3>
+                <p style="font-size: 0.8rem; color:#666">Community & Glory</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="role-section">
+        <button onclick="navTo('selection-section')" class="back-btn">❮ Back</button>
+        <h2 class="red-text">SELECT ROLE</h2>
+        <div class="glass-panel">
+            <div class="role-grid">
+                <div class="role-card" onclick="saveRole('Primary Rusher')">Primary Rusher</div>
+                <div class="role-card" onclick="saveRole('Secondary Rusher')">Secondary Rusher</div>
+                <div class="role-card" onclick="saveRole('Supporter')">Supporter</div>
+                <div class="role-card" onclick="saveRole('Sniper + IGL')">Sniper + IGL</div>
+                <div class="role-card" onclick="saveRole('Bomber')">Bomber</div>
+                <div class="role-card" onclick="saveRole('All Rounder')">All Rounder</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="form-section">
+        <button onclick="backFromForm()" class="back-btn">❮ Back</button>
+        <h2 class="gold-text">PLAYER DETAILS</h2>
+        <div class="glass-panel">
+            <p id="form-subtitle" style="text-align: center; font-size: 0.85rem; color: var(--primary); font-weight:bold; margin-bottom: 15px;"></p>
+            
+            <form onsubmit="generateCertificate(event)">
+                <div class="upload-box" onclick="document.getElementById('p_photo').click()">
+                    <span id="upload-hint" class="upload-icon">+</span>
+                    <img id="preview-img" style="display:none">
+                </div>
+                <input type="file" id="p_photo" accept="image/*" hidden onchange="handleImage(this)" required>
+                <p style="text-align:center; font-size:0.7rem; margin-bottom:15px; color:#666">Tap circle to upload photo</p>
+
+                <div class="input-group">
+                    <label>Real Name</label>
+                    <input type="text" id="name" placeholder="Enter full name" required>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <div class="input-group"><label>IGN</label><input type="text" id
+                      ="ign" placeholder="In game name"
+                      ="ign" required></div>
+                    <div class="input-group"><label>UID</label><input type="number"
+                    ="uid" placeholder="Enter game UID"
+                    id="uid" required></div>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <div class="input-group"><label>Level</label><input type="number"
+                    ="level" placeholder="Enter level 50+"
+                    id="level" required></div>
+                    <div class="input-group"><label>Gender</label>
+                        <select id="sex"><option>Male</option><option>Female</option></select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Date of Birth</label>
+                    <input type="date" id="dob" placeholder="Select DOB"="dob" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Device Model</label>
+                    <input type="text" id="device" placeholder="e.g. iPhone 13 Pro" required>
+                </div>
+
+                <div class="input-group">
+                    <label>State</label>
+                    <select id="state" required>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="U.P">Uttar Pradesh</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div id="fields-esports" class="hidden">
+                    <div class="input-group">
+                        <label>Esp Exp</label>
+                        <select id="exp">
+                            <option>6 Months</option>
+                            <option>1 Year</option>
+                            <option>2 Years</option>
+                            <option>3+ Years</option>
+                        </select>
+                    </div>
+                    <div class="input-group"><label>Parallel Use ?</label><select id="parallel"><option>No</option><option>Yes</option></select></div>
+                </div>
+
+                <div id="fields-guild" class="hidden" style="background: #fffcf0; padding:10px; border-radius:10px; border: 1px solid var(--gold); margin-bottom:10px;">
+                    <div class="input-group"><label>Weekly Active Days</label>
+                        <select id="active_days">
+                            <option>Daily</option><option>1-2 Days</option><option>3-4 Days</option>
+                        </select>
+                    </div>
+                    <div class="input-group"><label>Glory Target (Weekly)</label><input type="number" id="glory" placeholder="2000-100000"></div>
+                </div>
+
+                <div class="input-group"><label>Playing Time</label>
+                    <select id="time">
+                        <option>Morning</option><option>Evening</option><option>Night</option><option>Daily 4 h+</option><option>Daily 6 h+</option><option>Always Active</option>
+                    </select>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin-bottom:10px;">
+                    <div class="input-group"><label>Family Issues</label><select id="family"><option>No</option><option>Yes</option></select></div>
+                    <div class="input-group"><label>Mic ON/OF</label><select id="mic"><option>ON</option><option>OF</option></select></div>
+                </div>
+
+                <div class="input-group">
+                    <label>Social ID (Instagram/YouTube)</label>
+                    <input type="text" id="social" placeholder="@username" required>
+                </div>
+
+                <button type="submit" class="btn-main">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="cert-section">
+        <button onclick="location.reload()" class="back-btn">🏠 Home</button>
+        <h2 class="red-text">OFFICIAL CERTIFICATE</h2>
+        
+        <div class="glass-panel" style="max-width: 800px;">
+            <div class="cert-container">
+                <canvas id="finalCanvas"></canvas>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
+                <button onclick="downloadCert()" class="btn-option btn-download">⬇ DOWNLOAD HD</button>
+                <button onclick="applyWhatsApp()" class="btn-option btn-whatsapp">✅ APPLY for Tc eSports</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- 1. STATE MANAGEMENT ---
+        let appData = {
+            type: '',
+            role: '',
+            photoURL: ''
+        };
+
+        // --- 2. NAVIGATION ---
+        function navTo(id) {
+            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        // Logic fix: Role Selection Logic
+        function selectPath(type) {
+            appData.type = type;
+            if(type === 'Guild Member') {
+                appData.role = 'Guild Member';
+                document.getElementById('fields-esports').classList.add('hidden');
+                document.getElementById('fields-guild').classList.remove('hidden');
+                document.getElementById('form-subtitle').innerText = "JOINING: OFFICIAL GUILD";
+                navTo('form-section');
+            } else {
+                // eSports Logic: Go to Roles first
+                document.getElementById('fields-esports').classList.remove('hidden');
+                document.getElementById('fields-guild').classList.add('hidden');
+                navTo('role-section');
+            }
+        }
+
+        // Triggered when a Role Card is clicked
+        function saveRole(role) {
+            appData.role = role;
+            document.getElementById('form-subtitle').innerText = "ROLE: " + role.toUpperCase();
+            navTo('form-section');
+        }
+
+        function backFromForm() {
+            if(appData.type === 'Guild Member') navTo('selection-section');
+            else navTo('role-section');
+        }
+
+        // --- 3. IMAGE PREVIEW ---
+        function handleImage(input) {
+            if(input.files && input.files[0]){
+                const reader = new FileReader();
+                reader.onload = function(e){
+                    document.getElementById('preview-img').src = e.target.result;
+                    document.getElementById('preview-img').style.display = 'block';
+                    document.getElementById('upload-hint').style.display = 'none';
+                    appData.photoURL = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // --- 4. CALCULATE AGE FROM DOB ---
+        function getAge(dateString) {
+            var today = new Date();
+            var birthDate = new Date(dateString);
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        // --- 5. GENERATE CERTIFICATE (CANVAS) ---
+        function generateCertificate(e) {
+            e.preventDefault();
+            
+            const canvas = document.getElementById('finalCanvas');
+            const ctx = canvas.getContext('2d');
+            const bg = new Image();
+            bg.src = 'background.png'; // Must be in same folder
+
+            bg.onload = function() {
+                // Set Canvas Size to Image Size (HD)
+                canvas.width = bg.width;
+                canvas.height = bg.height;
+
+                // Draw Background
+                ctx.drawImage(bg, 0, 0);
+
+                // Config
+                const W = canvas.width;
+                const H = canvas.height;
+                const name = document.getElementById('name').value;
+                const ign = document.getElementById('ign').value;
+                const uid = document.getElementById('uid').value;
+                const dob = document.getElementById('dob').value;
+                const age = getAge(dob);
+                const social = document.getElementById('social').value;
+                
+                // Colors
+                const colBlue = '#2d4bf0';
+                const colRed = '#aa0000';
+                const colBlack = '#000000';
+
+                // Helper Text Function
+                function drawTxt(txt, x, y, size, color, align='left', weight='bold') {
+                    ctx.font = `${weight} ${size}px 'Poppins', sans-serif`;
+                    ctx.fillStyle = color;
+                    ctx.textAlign = align;
+                    ctx.fillText(txt, x, y);
+                }
+
+                // --- MAPPING COORDINATES ---
+                // Header Info
+                drawTxt(name, W*0.35, H*0.32, W*0.05, colBlue, 'left', '900');
+                drawTxt(appData.role, W*0.35, H*0.36, W*0.04, colBlue);
+                drawTxt("Request: " + appData.type, W*0.35, H*0.40, W*0.035, colRed);
+                drawTxt("SOCIAL ID: " + social, W*0.35, H*0.44, W*0.035, colRed);
+
+                // Grid Details
+                const startY = H * 0.50;
+                const stepY = H * 0.029;
+                const leftX = W * 0.30;
+                const rightX = W * 0.70;
+                const labelSize = W * 0.030;
+
+                function drawRow(label, val, x, y) {
+                    ctx.font = `bold ${labelSize}px Arial`;
+                    ctx.fillStyle = colRed; ctx.textAlign = 'right';
+                    ctx.fillText(label + " : ", x, y);
+                    ctx.fillStyle = colBlack; ctx.textAlign = 'left';
+                    ctx.fillText(val, x + 15, y);
+                }
+
+                // Left Column
+                drawRow("SEX", document.getElementById('sex').value, leftX, startY);
+                drawRow("IGN", ign, leftX, startY + stepY);
+                drawRow("UID", uid, leftX, startY + stepY*2);
+                drawRow("LEVEL", document.getElementById('level').value, leftX, startY + stepY*3);
+                drawRow("AGE", age, leftX, startY + stepY*4); // Calculated Age
+                drawRow("DEVICE", document.getElementById('device').value, leftX, startY + stepY*5);
+
+                // Right Column
+                drawRow("STATE", document.getElementById('state').value, rightX, startY);
+                
+                // Conditional Data based on selection
+                if(appData.type === 'Tc eSports Team') {
+                    drawRow("ESP EXP", document.getElementById('exp').value, rightX, startY + stepY);
+                    drawRow("PARALLEL", document.getElementById('parallel').value, rightX, startY + stepY*2);
+                } else {
+                    drawRow("ACTIVE", document.getElementById('active_days').value, rightX, startY + stepY);
+                    drawRow("GLORY", document.getElementById('glory').value, rightX, startY + stepY*2);
+                }
+
+                drawRow("F Issue", document.getElementById('family').value, rightX, startY + stepY*3);
+                drawRow("MIC", document.getElementById('mic').value, rightX, startY + stepY*4);
+                drawRow("TIME", document.getElementById('time').value, rightX, startY + stepY*5);
+
+                // Date
+                drawTxt("Date: " + new Date().toLocaleDateString(), W*0.15, H*0.68, W*0.03, colBlack);
+
+                // Photo Drawing
+                if (appData.photoURL) {
+    const img = new Image();
+    img.src = appData.photoURL;
+    img.onload = function() {
+        
+        const px = W * 0.10;
+        const py = H * 0.28;
+        const pw = W * 0.19;
+        const ph = pw * 1.25;
+        const radius = 30; // 👈 10px radius
+        
+        ctx.save();
+        
+        // Rounded Rectangle Path
+        ctx.beginPath();
+        ctx.moveTo(px + radius, py);
+        ctx.lineTo(px + pw - radius, py);
+        ctx.quadraticCurveTo(px + pw, py, px + pw, py + radius);
+        ctx.lineTo(px + pw, py + ph - radius);
+        ctx.quadraticCurveTo(px + pw, py + ph, px + pw - radius, py + ph);
+        ctx.lineTo(px + radius, py + ph);
+        ctx.quadraticCurveTo(px, py + ph, px, py + ph - radius);
+        ctx.lineTo(px, py + radius);
+        ctx.quadraticCurveTo(px, py, px + radius, py);
+        ctx.closePath();
+        
+        ctx.clip(); // 👈 Important for rounded image
+        
+        ctx.drawImage(img, px, py, pw, ph);
+        
+        ctx.restore();
+        
+        // Border (optional)
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 15;
+        ctx.stroke();
+    }
+}
+                
+                navTo('cert-section');
+            };
+
+            bg.onerror = function() {
+                alert("ERROR: 'background.png' file nahi mili! Please check folder.");
+            }
+        }
+
+        // --- 6. ACTIONS ---
+        function downloadCert() {
+            const link = document.createElement('a');
+            link.download = 'TC_Certificate.png';
+            link.href = document.getElementById('finalCanvas').toDataURL('image/png');
+            link.click();
+        }
+
+        function applyWhatsApp() {
+            const name = document.getElementById('name').value;
+            const ign = document.getElementById('ign').value;
+            const uid = document.getElementById('uid').value;
+            
+            let details = "";
+            if(appData.type === 'Guild Member') {
+                details = `Glory: ${document.getElementById('glory').value}%0aActive: ${document.getElementById('active_days').value}`;
+            } else {
+                details = ` Esp Exp: ${document.getElementById('exp').value}%0aRole: ${appData.role}`;
+            }
+
+            const msg = `*NEW APPLICATION: TriggerCraft*%0a`
+                      + `---------------------------%0a`
+                      + `*Name:* ${name}%0a`
+                      + `*IGN:* ${ign}%0a`
+                      + `*UID:* ${uid}%0a`
+                      + `${details}%0a`
+                      + `---------------------------%0a`
+                      + `*Certificate Generated!* ✅`;
+            
+            window.location.href = `https://wa.me/?text=${msg}`;
+        }
+
+        // --- 7. BACKGROUND VFX ---
+        const pCanvas = document.getElementById('particles-js');
+        const pCtx = pCanvas.getContext('2d');
+        pCanvas.width = window.innerWidth;
+        pCanvas.height = window.innerHeight;
+
+        let particles = [];
+        for(let i=0; i<40; i++) {
+            particles.push({
+                x: Math.random() * pCanvas.width,
+                y: Math.random() * pCanvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 3,
+                color: `rgba(200, 50, 50, ${Math.random() * 0.2})` 
+            });
+        }
+
+        function animate() {
+            pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if(p.x < 0 || p.x > pCanvas.width) p.vx *= -1;
+                if(p.y < 0 || p.y > pCanvas.height) p.vy *= -1;
+                pCtx.beginPath();
+                pCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                pCtx.fillStyle = p.color;
+                pCtx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
